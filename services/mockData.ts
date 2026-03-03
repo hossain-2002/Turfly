@@ -1,5 +1,4 @@
 import { User, UserRole, Turf, Booking } from '../types';
-// src/services/mockData.ts এর একদম উপরে যোগ করুন
 import bananiImg from '../images/banani.png';
 import bashundharaImg from '../images/bashundhara.png';
 import dhanmondiImg from '../images/dhanmondi.png';

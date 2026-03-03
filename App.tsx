@@ -14,7 +14,6 @@ import MyBookings from './pages/MyBookings';
 import Checkout from './pages/Checkout';
 import AdminDashboard from './pages/AdminDashboard';
 import ManagerDashboard from './pages/ManagerDashboard';
-import PortalSelection from './pages/PortalSelection';
 import ScrollToTop from './components/ScrollToTop';
 import { Loader2 } from 'lucide-react';
 
@@ -64,15 +63,12 @@ const App: React.FC = () => {
                 <Route path="/register" element={<Register />} />
                 <Route path="/support" element={<Support />} />
 
-                {/* Hidden/Restricted Routes with Loader Effect */}
-                <Route path="/portal-access" element={<PortalSelection />} />
-                
                 <Route path="/admin-dashboard" element={
                   <RouteLoader>
                     <AdminDashboard />
                   </RouteLoader>
                 } />
-                
+
                 <Route path="/manager-dashboard" element={
                   <RouteLoader>
                     <ManagerDashboard />
@@ -85,7 +81,7 @@ const App: React.FC = () => {
                     <MyBookings />
                   </ProtectedRoute>
                 } />
-                
+
                 <Route path="/checkout" element={
                   <ProtectedRoute>
                     <Checkout />
