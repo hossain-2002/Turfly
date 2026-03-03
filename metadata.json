@@ -1,0 +1,5 @@
+{
+  "name": "Turfly",
+  "description": "A professional turf booking management system with user, manager, and admin roles. Features include real-time slot booking, dashboard management, and support ticketing.",
+  "requestFramePermissions": []
+}
