@@ -10,9 +10,6 @@ const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
-  
-  // Hidden Trigger State
-  const [logoClicks, setLogoClicks] = useState(0);
 
   // Profile Dropdown State
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -34,28 +31,6 @@ const Navbar: React.FC = () => {
     setIsOpen(false);
     setIsProfileOpen(false);
   }, [location.pathname]);
-
-  // Hidden Admin Trigger Logic
-  useEffect(() => {
-    let timer: ReturnType<typeof setTimeout>;
-    
-    // Reset count if inactive for 2 seconds
-    if (logoClicks > 0 && logoClicks < 5) {
-      timer = setTimeout(() => setLogoClicks(0), 2000);
-    }
-    
-    // Trigger navigation on 5th click
-    if (logoClicks === 5) {
-      navigate('/portal-access');
-      setLogoClicks(0);
-    }
-    
-    return () => clearTimeout(timer);
-  }, [logoClicks, navigate]);
-
-  const handleLogoClick = () => {
-    setLogoClicks(prev => prev + 1);
-  };
 
   const handleLogout = () => {
     logout();
@@ -104,7 +79,7 @@ const Navbar: React.FC = () => {
             
             {/* Logo */}
             <div className="flex-shrink-0 flex items-center z-20">
-                <Link to="/" onClick={handleLogoClick} className="flex items-center gap-2 group cursor-pointer select-none">
+                <Link to="/" className="flex items-center gap-2 group cursor-pointer select-none">
                     {/* Logo Icon: In Dark Mode, invert colors and boost brightness for visibility */}
                     <div className={`relative w-9 h-9 transition-all duration-300 group-hover:rotate-180 ${isDark ? 'filter invert brightness-150' : ''}`}>
                          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full drop-shadow-sm">
