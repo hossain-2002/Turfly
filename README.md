@@ -19,4 +19,4 @@ A premium sports turf booking platform designed to help users find and book thei
 3. Start the project by running the `npm run dev` command.
 
 ---
-**Crafted with ❤️ by SHISHIR**
+**Crafted with ❤️ by SHISHIR AND SADI**
