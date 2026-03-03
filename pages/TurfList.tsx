@@ -7,11 +7,13 @@ const TurfList: React.FC = () => {
   const { turfs } = useData();
   const location = useLocation();
   const locationState = location.state as { location?: string; sport?: string; date?: string } | null;
-  
+
   const [filters, setFilters] = useState({
     location: locationState?.location || '',
     sport: locationState?.sport || '',
-    date: locationState?.date || new Date().toISOString().split('T')[0]
+    date: locationState?.date || new Date().toISOString().split('T')[0],
+    minPrice: '',
+    maxPrice: '',
   });
 
   // Effect to update filters if location state changes (e.g. from Home nav)
@@ -29,7 +31,9 @@ const TurfList: React.FC = () => {
   const filteredTurfs = turfs.filter(turf => {
     const matchesLoc = turf.location.toLowerCase().includes(filters.location.toLowerCase());
     const matchesSport = !filters.sport || turf.sport === filters.sport;
-    return matchesLoc && matchesSport;
+    const matchesMin = !filters.minPrice || turf.pricePerHour >= Number(filters.minPrice);
+    const matchesMax = !filters.maxPrice || turf.pricePerHour <= Number(filters.maxPrice);
+    return matchesLoc && matchesSport && matchesMin && matchesMax;
   });
 
   return (
@@ -47,7 +51,7 @@ const TurfList: React.FC = () => {
               placeholder="Location (e.g. Mirpur)"
               className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 dark:border-slate-600 rounded-lg leading-5 bg-white dark:bg-slate-700 text-slate-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-shadow"
               value={filters.location}
-              onChange={(e) => setFilters(prev => ({...prev, location: e.target.value}))}
+              onChange={(e) => setFilters(prev => ({ ...prev, location: e.target.value }))}
             />
           </div>
 
@@ -58,7 +62,7 @@ const TurfList: React.FC = () => {
             <select
               className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 dark:border-slate-600 rounded-lg leading-5 bg-white dark:bg-slate-700 text-slate-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm appearance-none transition-shadow"
               value={filters.sport}
-              onChange={(e) => setFilters(prev => ({...prev, sport: e.target.value}))}
+              onChange={(e) => setFilters(prev => ({ ...prev, sport: e.target.value }))}
             >
               <option value="">All Sports</option>
               <option value="Football">Football</option>
@@ -77,8 +81,40 @@ const TurfList: React.FC = () => {
               className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 dark:border-slate-600 rounded-lg leading-5 bg-white dark:bg-slate-700 text-slate-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition-shadow"
               value={filters.date}
               min={new Date().toISOString().split('T')[0]}
-              onChange={(e) => setFilters(prev => ({...prev, date: e.target.value}))}
+              onChange={(e) => setFilters(prev => ({ ...prev, date: e.target.value }))}
             />
+          </div>
+        </div>
+
+        {/* Price Range Filter */}
+        <div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center gap-3">
+          <span className="text-sm font-semibold text-slate-500 dark:text-slate-400 whitespace-nowrap">Price / Hour (৳):</span>
+          <div className="flex items-center gap-2 flex-1">
+            <input
+              type="number"
+              placeholder="Min"
+              min={0}
+              className="w-28 px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+              value={filters.minPrice}
+              onChange={(e) => setFilters(prev => ({ ...prev, minPrice: e.target.value }))}
+            />
+            <span className="text-slate-400">—</span>
+            <input
+              type="number"
+              placeholder="Max"
+              min={0}
+              className="w-28 px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+              value={filters.maxPrice}
+              onChange={(e) => setFilters(prev => ({ ...prev, maxPrice: e.target.value }))}
+            />
+            {(filters.minPrice || filters.maxPrice) && (
+              <button
+                onClick={() => setFilters(prev => ({ ...prev, minPrice: '', maxPrice: '' }))}
+                className="text-xs text-red-400 hover:text-red-300 font-semibold transition-colors"
+              >
+                Clear
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -128,19 +164,19 @@ const TurfList: React.FC = () => {
             </Link>
           ))
         ) : (
-           <div className="col-span-full text-center py-16 bg-white dark:bg-slate-800 rounded-xl border border-dashed border-gray-300 dark:border-slate-700">
-             <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 dark:bg-slate-700 mb-4">
-               <Filter className="h-6 w-6 text-gray-400" />
-             </div>
-             <h3 className="text-lg font-medium text-gray-900 dark:text-white">No turfs found</h3>
-             <p className="mt-1 text-sm text-gray-500 dark:text-slate-400">Try adjusting your search filters to find what you're looking for.</p>
-             <button 
-                onClick={() => setFilters({ location: '', sport: '', date: new Date().toISOString().split('T')[0] })}
-                className="mt-4 text-primary-600 hover:text-primary-700 font-medium text-sm"
-             >
-               Clear all filters
-             </button>
-           </div>
+          <div className="col-span-full text-center py-16 bg-white dark:bg-slate-800 rounded-xl border border-dashed border-gray-300 dark:border-slate-700">
+            <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-gray-100 dark:bg-slate-700 mb-4">
+              <Filter className="h-6 w-6 text-gray-400" />
+            </div>
+            <h3 className="text-lg font-medium text-gray-900 dark:text-white">No turfs found</h3>
+            <p className="mt-1 text-sm text-gray-500 dark:text-slate-400">Try adjusting your search filters to find what you're looking for.</p>
+            <button
+              onClick={() => setFilters({ location: '', sport: '', date: new Date().toISOString().split('T')[0] })}
+              className="mt-4 text-primary-600 hover:text-primary-700 font-medium text-sm"
+            >
+              Clear all filters
+            </button>
+          </div>
         )}
       </div>
     </div>
