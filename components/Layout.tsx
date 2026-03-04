@@ -99,7 +99,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               &copy; 2026 Turfly. All rights reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <span className="text-slate-500 text-sm">Crafted with <span className="text-red-500">♥</span> by SHISHIIR and DISHA.</span>
+              <span className="text-slate-500 text-sm">Crafted with <span className="text-red-500">♥</span> by SHISHIIR and SADI.</span>
             </div>
           </div>
         </div>
