@@ -22,6 +22,10 @@ export interface Turf {
   images: string[];
   managerId: string;
   amenities: string[];
+  coordinates?: {
+    lat: number;
+    lng: number;
+  };
 }
 
 export interface Booking {

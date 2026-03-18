@@ -44,7 +44,8 @@ export const INITIAL_TURFS: Turf[] = [
     description: 'A spacious turf suitable for both 5-a-side Football and Cricket matches. Features excellent floodlights.',
     images: [mirpurImg],
     managerId: '2',
-    amenities: ['Parking', 'Water', 'Gallery']
+    amenities: ['Parking', 'Water', 'Gallery'],
+    coordinates: { lat: 23.8042, lng: 90.3673 }
   },
   {
     id: 't2',
@@ -55,7 +56,8 @@ export const INITIAL_TURFS: Turf[] = [
     description: 'Premier training facility located in the heart of Dhanmondi. Ideal for professional training sessions.',
     images: [dhanmondiImg],
     managerId: '2',
-    amenities: ['Locker Room', 'Showers', 'Cafe']
+    amenities: ['Locker Room', 'Showers', 'Cafe'],
+    coordinates: { lat: 23.7461, lng: 90.3742 }
   },
   {
     id: 't3',
@@ -66,7 +68,8 @@ export const INITIAL_TURFS: Turf[] = [
     description: 'High-end turf with FIFA grade grass. Perfect for corporate tournaments and competitive cricket.',
     images: [bananiImg],
     managerId: '2',
-    amenities: ['VIP Lounge', 'Parking', 'Pro Shop']
+    amenities: ['VIP Lounge', 'Parking', 'Pro Shop'],
+    coordinates: { lat: 23.7940, lng: 90.4043 }
   },
   {
     id: 't4',
@@ -77,7 +80,8 @@ export const INITIAL_TURFS: Turf[] = [
     description: 'Luxury sports arena for professional matches. Offers top-tier amenities and privacy.',
     images: [gulshanImg],
     managerId: '99',
-    amenities: ['AC Dugouts', 'Live Screening', 'Premium Showers']
+    amenities: ['AC Dugouts', 'Live Screening', 'Premium Showers'],
+    coordinates: { lat: 23.7925, lng: 90.4162 }
   },
   {
     id: 't5',
@@ -88,7 +92,8 @@ export const INITIAL_TURFS: Turf[] = [
     description: 'Located in the business district, great for after-work cricket and football games.',
     images: [motijheelImg],
     managerId: '2',
-    amenities: ['Parking', 'First Aid', 'Refreshments']
+    amenities: ['Parking', 'First Aid', 'Refreshments'],
+    coordinates: { lat: 23.7330, lng: 90.4172 }
   },
   {
     id: 't6',
@@ -99,7 +104,8 @@ export const INITIAL_TURFS: Turf[] = [
     description: 'A cozy but well-maintained turf focused on youth training and casual games.',
     images: [bashundharaImg],
     managerId: '99',
-    amenities: ['Water', 'Equipment Rental']
+    amenities: ['Water', 'Equipment Rental'],
+    coordinates: { lat: 23.8191, lng: 90.4526 }
   },
   {
     id: 't7',
@@ -110,7 +116,8 @@ export const INITIAL_TURFS: Turf[] = [
     description: 'Large complex supporting multiple sports. Popular for local cricket leagues.',
     images: [mohammadpurImg],
     managerId: '2',
-    amenities: ['Parking', 'Prayer Room', 'Water']
+    amenities: ['Parking', 'Prayer Room', 'Water'],
+    coordinates: { lat: 23.7595, lng: 90.3603 }
   },
   {
     id: 't8',
@@ -121,7 +128,8 @@ export const INITIAL_TURFS: Turf[] = [
     description: 'Modern facility in Uttara Sector 4. Features a smooth surface ideal for fast-paced football.',
     images: [uttaraImg],
     managerId: '2',
-    amenities: ['Changing Rooms', 'Food Court', 'Wifi']
+    amenities: ['Changing Rooms', 'Food Court', 'Wifi'],
+    coordinates: { lat: 23.8759, lng: 90.3795 }
   },
   {
     id: 't9',
@@ -132,7 +140,8 @@ export const INITIAL_TURFS: Turf[] = [
     description: 'Centrally located arena accessible from all parts of the city. Great for regular training.',
     images: [farmgateImg],
     managerId: '99',
-    amenities: ['Water', 'Seating Area']
+    amenities: ['Water', 'Seating Area'],
+    coordinates: { lat: 23.7561, lng: 90.3872 }
   },
   {
     id: 't10',
@@ -143,7 +152,8 @@ export const INITIAL_TURFS: Turf[] = [
     description: 'Vibrant atmosphere near the university area. Excellent for student tournaments.',
     images: [shahbagImg],
     managerId: '2',
-    amenities: ['Student Discount', 'Water', 'Locker']
+    amenities: ['Student Discount', 'Water', 'Locker'],
+    coordinates: { lat: 23.7389, lng: 90.3945 }
   }
 ];
 

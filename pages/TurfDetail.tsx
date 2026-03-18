@@ -3,6 +3,7 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useData } from '../context/DataContext';
 import { useAuth } from '../context/AuthContext';
 import { MapPin, Calendar, CheckCircle, Info, Star, ShieldCheck, Wifi, Car, Droplets } from 'lucide-react';
+import TurfMap from '../components/TurfMap';
 
 const TurfDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -136,6 +137,14 @@ const TurfDetail: React.FC = () => {
                 </div>
               ))}
             </div>
+
+            {/* Turf Map Section */}
+            {turf.coordinates && (
+              <div className="mt-8">
+                <h3 className="font-semibold text-white mb-4">Location</h3>
+                <TurfMap turfLocation={turf.coordinates} turfName={turf.name} />
+              </div>
+            )}
           </div>
         </div>
 
@@ -223,8 +232,8 @@ const TurfDetail: React.FC = () => {
                         key={d}
                         onClick={() => setSelectedDuration(d)}
                         className={`px-3 py-1 rounded-lg text-xs font-bold border transition-all ${selectedDuration === d
-                            ? 'bg-emerald-600 text-white border-emerald-600'
-                            : 'bg-transparent text-emerald-400 border-emerald-500 hover:bg-emerald-600 hover:text-white'
+                          ? 'bg-emerald-600 text-white border-emerald-600'
+                          : 'bg-transparent text-emerald-400 border-emerald-500 hover:bg-emerald-600 hover:text-white'
                           }`}
                       >
                         {d}h
