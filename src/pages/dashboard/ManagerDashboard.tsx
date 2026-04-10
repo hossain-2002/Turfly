@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { useData } from '../context/DataContext';
-import { useToast } from '../context/ToastContext';
-import { UserRole } from '../types';
+import { useAuth } from '@/context/AuthContext';
+import { useData } from '@/context/DataContext';
+import { useToast } from '@/context/ToastContext';
+import { UserRole } from '@/types/index';
 import { Calendar, User, Clock, Filter, DollarSign, TrendingUp, Users, ArrowRight, AlertCircle, MapPin, CheckCircle, LogOut, ClipboardList } from 'lucide-react';
 
 const ManagerDashboard: React.FC = () => {

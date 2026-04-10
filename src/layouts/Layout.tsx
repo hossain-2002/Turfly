@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import Navbar from './Navbar';
+import Navbar from '@/components/common/Navbar';
 import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 

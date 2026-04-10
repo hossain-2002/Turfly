@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { useData } from '../context/DataContext';
-import { useAuth } from '../context/AuthContext';
+import { useData } from '@/context/DataContext';
+import { useAuth } from '@/context/AuthContext';
 import { MapPin, Calendar, CheckCircle, Info, Star, ShieldCheck, Wifi, Car, Droplets } from 'lucide-react';
-import TurfMap from '../components/TurfMap';
+import TurfMap from '@/components/map/TurfMap';
 
 const TurfDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();

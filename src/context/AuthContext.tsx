@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { User, UserRole } from '../types';
-import { INITIAL_USERS } from '../services/mockData';
+import { User, UserRole } from '@/types/index';
+import { INITIAL_USERS } from '@/services/mockData';
 
 const SESSION_KEY = 'turfly_user_session';
 

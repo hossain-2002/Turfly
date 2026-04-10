@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate, Navigate } from 'react-router-dom';
-import { useData } from '../context/DataContext';
-import { useAuth } from '../context/AuthContext';
-import { useToast } from '../context/ToastContext';
+import { useData } from '@/context/DataContext';
+import { useAuth } from '@/context/AuthContext';
+import { useToast } from '@/context/ToastContext';
 import { CreditCard, Calendar, Clock, MapPin, Shield, CheckCircle, Lock, User, Phone } from 'lucide-react';
 import { doc, setDoc } from 'firebase/firestore';
-import { db } from '../services/firebase';
+import { db } from '@/services/firebase';
 const Checkout: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();

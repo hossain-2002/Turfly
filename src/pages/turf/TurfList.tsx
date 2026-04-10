@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { useData } from '../context/DataContext';
+import { useData } from '@/context/DataContext';
 import { MapPin, Filter, Calendar, Trophy } from 'lucide-react';
 
 const TurfList: React.FC = () => {

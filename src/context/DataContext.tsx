@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { Turf, Booking, SupportTicket } from '../types';
-import { INITIAL_TURFS, INITIAL_BOOKINGS } from '../services/mockData';
+import { Turf, Booking, SupportTicket } from '@/types/index';
+import { INITIAL_TURFS, INITIAL_BOOKINGS } from '@/services/mockData';
 import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
-import { db } from '../services/firebase';
+import { db } from '@/services/firebase';
 
 interface DataContextType {
   turfs: Turf[];

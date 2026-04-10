@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { Lock, Mail, AlertCircle, User, ShieldCheck, LayoutDashboard, ArrowRight, ChevronLeft } from 'lucide-react';
-import AuthLayout from '../layouts/AuthLayout';
+import { useAuth } from '@/context/AuthContext';
+import { Lock, Mail, AlertCircle, User, ShieldCheck, LayoutDashboard, ArrowRight, ChevronLeft, Eye, EyeOff } from 'lucide-react';
+import AuthLayout from '@/layouts/AuthLayout';
 
 type Role = 'user' | 'admin' | 'manager' | null;
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [selectedRole, setSelectedRole] = useState<Role>(null);
@@ -176,7 +177,7 @@ const Login: React.FC = () => {
               type="email"
               autoComplete="email"
               required
-              className="focus:ring-[#10B981] focus:border-[#10B981] block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2.5 border"
+              className="focus:ring-[#10B981] focus:border-[#10B981] block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2.5 border text-slate-900 font-bold placeholder-slate-400"
               placeholder="user@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -195,14 +196,25 @@ const Login: React.FC = () => {
             <input
               id="password"
               name="password"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               autoComplete="current-password"
               required
-              className="focus:ring-[#10B981] focus:border-[#10B981] block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2.5 border"
+              className="focus:ring-[#10B981] focus:border-[#10B981] block w-full pl-10 pr-10 sm:text-sm border-gray-300 rounded-md py-2.5 border text-slate-900 font-bold placeholder-slate-400"
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            <button
+              type="button"
+              className="absolute inset-y-0 right-0 pr-3 flex items-center"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? (
+                <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors" />
+              ) : (
+                <Eye className="h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors" />
+              )}
+            </button>
           </div>
         </div>
 

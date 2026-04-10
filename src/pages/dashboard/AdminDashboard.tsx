@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useData } from '../context/DataContext';
+import { useData } from '@/context/DataContext';
 import { CheckCircle, Search, Filter, Calendar, Clock, Phone, User, MapPin, Trash2, ClipboardList, Lock, ArrowRight, AlertCircle, LogOut, Plus, DollarSign, Users, Briefcase } from 'lucide-react';
-import { Turf, UserRole } from '../types';
+import { Turf, UserRole } from '@/types/index';
 
 const AdminDashboard: React.FC = () => {
     const navigate = useNavigate();

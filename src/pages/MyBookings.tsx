@@ -1,6 +1,6 @@
 import React from 'react';
-import { useAuth } from '../context/AuthContext';
-import { useData } from '../context/DataContext';
+import { useAuth } from '@/context/AuthContext';
+import { useData } from '@/context/DataContext';
 import { Navigate, Link } from 'react-router-dom';
 import { Calendar, MapPin, Clock, AlertCircle } from 'lucide-react';
 

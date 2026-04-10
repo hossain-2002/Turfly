@@ -5,8 +5,8 @@ import {
   Search as SearchIcon, CalendarCheck, PlayCircle, Trophy, 
   ChevronDown, ChevronLeft, ChevronRight, Zap, ShieldCheck, Headphones, Quote, X, Filter
 } from 'lucide-react';
-import { useData } from '../context/DataContext';
-import h1Img from '../images/h1.avif';
+import { useData } from '@/context/DataContext';
+import h1Img from '@/assets/images/h1.avif';
 // Hero Slider Data
 const HERO_SLIDES = [
   {
@@ -590,7 +590,88 @@ const Home: React.FC = () => {
         </div>
       </div>
 
-      {/* 3. Split Section: How It Works & Why Choose Turfly */}
+      {/* 3. Featured Arenas */}
+      <section className="bg-white dark:bg-slate-800 py-20 px-4 sm:px-6 lg:px-8 border-y border-slate-100 dark:border-slate-700 reveal-on-scroll transition-colors">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex justify-between items-end mb-12">
+            <div>
+              <span className="text-emerald-600 dark:text-emerald-400 font-bold tracking-wider uppercase text-sm">Premium Venues</span>
+              {/* H2 Updated */}
+              <h2 className="mt-2 text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight pl-4 border-l-4 border-emerald-500">Featured Arenas</h2>
+            </div>
+            <button 
+              onClick={() => navigate('/turfs')}
+              className="hidden md:flex items-center text-emerald-600 dark:text-emerald-400 font-semibold hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors group"
+            >
+              View all turfs <ArrowRight className="ml-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {featuredTurfs.map((turf) => (
+              <div 
+                key={turf.id} 
+                className="premium-card group cursor-pointer overflow-hidden flex flex-col h-full rounded-2xl border border-slate-200 dark:border-slate-700" 
+                onClick={() => navigate(`/turfs/${turf.id}`)}
+              >
+                <div className="aspect-video w-full relative overflow-hidden">
+                  <img 
+                    src={turf.images[0]} 
+                    alt={turf.name} 
+                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out" 
+                  />
+                  <div className="absolute top-4 right-4">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-white/90 dark:bg-slate-900/90 backdrop-blur-md text-emerald-800 dark:text-emerald-300 shadow-sm border border-emerald-100 dark:border-emerald-900">
+                      {turf.sport}
+                    </span>
+                  </div>
+                  <div className="absolute bottom-4 left-4">
+                    <div className="inline-flex items-center bg-slate-900/80 backdrop-blur-md px-3 py-1 rounded-lg border border-slate-700">
+                        <span className="text-emerald-400 text-xs font-bold uppercase tracking-wider mr-1">From</span>
+                        <span className="text-white font-bold">৳{turf.pricePerHour}/hr</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="p-6 flex flex-col flex-grow bg-white dark:bg-slate-800">
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">{turf.name}</h3>
+                    <div className="flex items-center space-x-1 bg-yellow-50 dark:bg-yellow-900/30 px-2 py-1 rounded-md border border-yellow-100 dark:border-yellow-900/50">
+                      <Star className="w-4 h-4 text-yellow-500 fill-current" />
+                      <span className="text-sm font-bold text-slate-900 dark:text-white">4.8</span>
+                    </div>
+                  </div>
+                  
+                  <p className="text-sm text-slate-500 dark:text-slate-400 flex items-center mb-6">
+                    <MapPin className="w-4 h-4 mr-1.5 text-emerald-500" /> {turf.location}
+                  </p>
+
+                  <div className="mt-auto pt-6 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between">
+                    <div className="flex gap-2">
+                      {turf.amenities.slice(0, 2).map(am => (
+                          <span key={am} className="text-xs bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 px-2 py-1 rounded-md">{am}</span>
+                      ))}
+                    </div>
+                    <button className="px-5 py-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 font-semibold text-sm border border-emerald-100 dark:border-emerald-800/50 group-hover:bg-emerald-600 group-hover:text-white dark:group-hover:text-white transition-all">
+                      Book Now
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-8 text-center md:hidden">
+            <button 
+              onClick={() => navigate('/turfs')}
+              className="w-full py-3 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-700 dark:text-slate-200 font-semibold bg-white dark:bg-slate-800 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+            >
+              Browse All Turfs
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. Split Section: How It Works & Why Choose Turfly */}
       <section className="max-w-7xl mx-auto py-20 px-4 sm:px-6 lg:px-8 reveal-on-scroll">
          <div className="flex flex-col lg:flex-row gap-8 items-stretch">
             
@@ -677,87 +758,6 @@ const Home: React.FC = () => {
             </div>
 
          </div>
-      </section>
-
-      {/* 4. Featured Arenas */}
-      <section className="bg-white dark:bg-slate-800 py-20 px-4 sm:px-6 lg:px-8 border-y border-slate-100 dark:border-slate-700 reveal-on-scroll transition-colors">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex justify-between items-end mb-12">
-            <div>
-              <span className="text-emerald-600 dark:text-emerald-400 font-bold tracking-wider uppercase text-sm">Premium Venues</span>
-              {/* H2 Updated */}
-              <h2 className="mt-2 text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight pl-4 border-l-4 border-emerald-500">Featured Arenas</h2>
-            </div>
-            <button 
-              onClick={() => navigate('/turfs')}
-              className="hidden md:flex items-center text-emerald-600 dark:text-emerald-400 font-semibold hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors group"
-            >
-              View all turfs <ArrowRight className="ml-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
-            </button>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredTurfs.map((turf) => (
-              <div 
-                key={turf.id} 
-                className="premium-card group cursor-pointer overflow-hidden flex flex-col h-full rounded-2xl border border-slate-200 dark:border-slate-700" 
-                onClick={() => navigate(`/turfs/${turf.id}`)}
-              >
-                <div className="aspect-video w-full relative overflow-hidden">
-                  <img 
-                    src={turf.images[0]} 
-                    alt={turf.name} 
-                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out" 
-                  />
-                  <div className="absolute top-4 right-4">
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-white/90 dark:bg-slate-900/90 backdrop-blur-md text-emerald-800 dark:text-emerald-300 shadow-sm border border-emerald-100 dark:border-emerald-900">
-                      {turf.sport}
-                    </span>
-                  </div>
-                  <div className="absolute bottom-4 left-4">
-                    <div className="inline-flex items-center bg-slate-900/80 backdrop-blur-md px-3 py-1 rounded-lg border border-slate-700">
-                        <span className="text-emerald-400 text-xs font-bold uppercase tracking-wider mr-1">From</span>
-                        <span className="text-white font-bold">৳{turf.pricePerHour}/hr</span>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="p-6 flex flex-col flex-grow bg-white dark:bg-slate-800">
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">{turf.name}</h3>
-                    <div className="flex items-center space-x-1 bg-yellow-50 dark:bg-yellow-900/30 px-2 py-1 rounded-md border border-yellow-100 dark:border-yellow-900/50">
-                      <Star className="w-4 h-4 text-yellow-500 fill-current" />
-                      <span className="text-sm font-bold text-slate-900 dark:text-white">4.8</span>
-                    </div>
-                  </div>
-                  
-                  <p className="text-sm text-slate-500 dark:text-slate-400 flex items-center mb-6">
-                    <MapPin className="w-4 h-4 mr-1.5 text-emerald-500" /> {turf.location}
-                  </p>
-
-                  <div className="mt-auto pt-6 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between">
-                    <div className="flex gap-2">
-                      {turf.amenities.slice(0, 2).map(am => (
-                          <span key={am} className="text-xs bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 px-2 py-1 rounded-md">{am}</span>
-                      ))}
-                    </div>
-                    <button className="px-5 py-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 font-semibold text-sm border border-emerald-100 dark:border-emerald-800/50 group-hover:bg-emerald-600 group-hover:text-white dark:group-hover:text-white transition-all">
-                      Book Now
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="mt-8 text-center md:hidden">
-            <button 
-              onClick={() => navigate('/turfs')}
-              className="w-full py-3 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-700 dark:text-slate-200 font-semibold bg-white dark:bg-slate-800 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
-            >
-              Browse All Turfs
-            </button>
-          </div>
-        </div>
       </section>
 
       {/* 5. Testimonials */}

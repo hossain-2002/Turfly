@@ -1,14 +1,14 @@
-import { User, UserRole, Turf, Booking } from '../types';
-import bananiImg from '../images/banani.png';
-import bashundharaImg from '../images/bashundhara.png';
-import dhanmondiImg from '../images/dhanmondi.png';
-import farmgateImg from '../images/farmgate.png';
-import gulshanImg from '../images/gulshan.png';
-import mirpurImg from '../images/mirpur.png';
-import mohammadpurImg from '../images/mohammadpur.png';
-import motijheelImg from '../images/motijheel.png';
-import shahbagImg from '../images/shahbag.png';
-import uttaraImg from '../images/uttara.png';
+import { User, UserRole, Turf, Booking } from '@/types/index';
+import bananiImg from '@/assets/images/banani.png';
+import bashundharaImg from '@/assets/images/bashundhara.png';
+import dhanmondiImg from '@/assets/images/dhanmondi.png';
+import farmgateImg from '@/assets/images/farmgate.png';
+import gulshanImg from '@/assets/images/gulshan.png';
+import mirpurImg from '@/assets/images/mirpur.png';
+import mohammadpurImg from '@/assets/images/mohammadpur.png';
+import motijheelImg from '@/assets/images/motijheel.png';
+import shahbagImg from '@/assets/images/shahbag.png';
+import uttaraImg from '@/assets/images/uttara.png';
 
 export const INITIAL_USERS: User[] = [
   {

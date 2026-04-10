@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { useData } from '../context/DataContext';
+import { useAuth } from '@/context/AuthContext';
+import { useData } from '@/context/DataContext';
 import { Menu, X, LogOut, User as UserIcon, Settings, ChevronDown, Sun, Moon } from 'lucide-react';
 
 const Navbar: React.FC = () => {

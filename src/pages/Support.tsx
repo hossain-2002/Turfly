@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Mail, Phone, MessageSquare, Send, HelpCircle, ChevronDown } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
-import { useData } from '../context/DataContext';
+import { useAuth } from '@/context/AuthContext';
+import { useData } from '@/context/DataContext';
 
 const Support: React.FC = () => {
   const { user, isAuthenticated } = useAuth();

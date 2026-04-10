@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from './context/AuthContext';
-import { DataProvider } from './context/DataContext';
-import { ToastProvider } from './context/ToastContext';
-import Layout from './components/Layout';
-import Home from './pages/Home';
-import TurfList from './pages/TurfList';
-import TurfDetail from './pages/TurfDetail';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Support from './pages/Support';
-import MyBookings from './pages/MyBookings';
-import Checkout from './pages/Checkout';
-import AdminDashboard from './pages/AdminDashboard';
-import ManagerDashboard from './pages/ManagerDashboard';
-import ScrollToTop from './components/ScrollToTop';
+import { AuthProvider, useAuth } from '@/context/AuthContext';
+import { DataProvider } from '@/context/DataContext';
+import { ToastProvider } from '@/context/ToastContext';
+import Layout from '@/layouts/Layout';
+import Home from '@/pages/Home';
+import TurfList from '@/pages/turf/TurfList';
+import TurfDetail from '@/pages/turf/TurfDetail';
+import Login from '@/pages/auth/Login';
+import Register from '@/pages/auth/Register';
+import Support from '@/pages/Support';
+import MyBookings from '@/pages/MyBookings';
+import Checkout from '@/pages/Checkout';
+import AdminDashboard from '@/pages/dashboard/AdminDashboard';
+import ManagerDashboard from '@/pages/dashboard/ManagerDashboard';
+import ScrollToTop from '@/components/common/ScrollToTop';
 import { Loader2 } from 'lucide-react';
 
 // Protected Route Wrapper

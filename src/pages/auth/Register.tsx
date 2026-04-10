@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { Lock, Mail, User, AlertCircle } from 'lucide-react';
-import AuthLayout from '../layouts/AuthLayout';
+import { useAuth } from '@/context/AuthContext';
+import { Lock, Mail, User, AlertCircle, Eye, EyeOff } from 'lucide-react';
+import AuthLayout from '@/layouts/AuthLayout';
 
 const Register: React.FC = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -70,7 +72,7 @@ const Register: React.FC = () => {
               name="name"
               type="text"
               required
-              className="focus:ring-[#10B981] focus:border-[#10B981] block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2.5 border"
+              className="focus:ring-[#10B981] focus:border-[#10B981] block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2.5 border text-slate-900 font-bold placeholder-slate-400"
               placeholder="Enter your full name"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -92,7 +94,7 @@ const Register: React.FC = () => {
               name="email"
               type="email"
               required
-              className="focus:ring-[#10B981] focus:border-[#10B981] block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2.5 border"
+              className="focus:ring-[#10B981] focus:border-[#10B981] block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2.5 border text-slate-900 font-bold placeholder-slate-400"
               placeholder="user@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -112,13 +114,24 @@ const Register: React.FC = () => {
             <input
               id="password"
               name="password"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               required
-              className="focus:ring-[#10B981] focus:border-[#10B981] block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2.5 border"
+              className="focus:ring-[#10B981] focus:border-[#10B981] block w-full pl-10 pr-10 sm:text-sm border-gray-300 rounded-md py-2.5 border text-slate-900 font-bold placeholder-slate-400"
               placeholder="Min 6 characters"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            <button
+              type="button"
+              className="absolute inset-y-0 right-0 pr-3 flex items-center"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? (
+                <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors" />
+              ) : (
+                <Eye className="h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors" />
+              )}
+            </button>
           </div>
         </div>
 
@@ -134,9 +147,9 @@ const Register: React.FC = () => {
             <input
               id="confirmPassword"
               name="confirmPassword"
-              type="password"
+              type={showConfirmPassword ? 'text' : 'password'}
               required
-              className={`focus:ring-[#10B981] focus:border-[#10B981] block w-full pl-10 sm:text-sm rounded-md py-2.5 border ${confirmPassword && confirmPassword !== password
+              className={`focus:ring-[#10B981] focus:border-[#10B981] block w-full pl-10 pr-10 sm:text-sm rounded-md py-2.5 border text-slate-900 font-bold placeholder-slate-400 ${confirmPassword && confirmPassword !== password
                   ? 'border-red-400 bg-red-50'
                   : confirmPassword && confirmPassword === password
                     ? 'border-emerald-400'
@@ -146,6 +159,17 @@ const Register: React.FC = () => {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
+            <button
+              type="button"
+              className="absolute inset-y-0 right-0 pr-3 flex items-center"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            >
+              {showConfirmPassword ? (
+                <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors" />
+              ) : (
+                <Eye className="h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors" />
+              )}
+            </button>
           </div>
           {confirmPassword && confirmPassword !== password && (
             <p className="mt-1 text-xs text-red-500">Passwords do not match</p>
