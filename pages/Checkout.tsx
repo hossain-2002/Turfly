@@ -4,7 +4,8 @@ import { useData } from '../context/DataContext';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { CreditCard, Calendar, Clock, MapPin, Shield, CheckCircle, Lock, User, Phone } from 'lucide-react';
-
+import { doc, setDoc } from 'firebase/firestore';
+import { db } from '../services/firebase';
 const Checkout: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -74,6 +75,11 @@ const Checkout: React.FC = () => {
     const isBooked = addBooking(newBooking);
 
     if (isBooked) {
+      try {
+        await setDoc(doc(db, 'bookings', newBooking.id), newBooking);
+      } catch (err) {
+        console.error("Failed to save to Firestore", err);
+      }
       setSuccess(true);
       showToast('Booking successful! Manager will review it soon.', 'success');
       setTimeout(() => {

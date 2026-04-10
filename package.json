@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@types/leaflet-routing-machine": "^3.2.9",
+    "firebase": "^12.12.0",
     "leaflet": "^1.9.4",
     "leaflet-routing-machine": "^3.2.12",
     "lucide-react": "^0.563.0",

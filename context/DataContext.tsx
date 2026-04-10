@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Turf, Booking, SupportTicket } from '../types';
 import { INITIAL_TURFS, INITIAL_BOOKINGS } from '../services/mockData';
+import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
+import { db } from '../services/firebase';
 
 interface DataContextType {
   turfs: Turf[];
@@ -60,6 +62,25 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const [tickets, setTickets] = useState<SupportTicket[]>([]);
 
+  // Sync with Firestore on mount
+  useEffect(() => {
+    const fetchBookings = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, 'bookings'));
+        const fbBookings: Booking[] = [];
+        querySnapshot.forEach((docSnapshot) => {
+          fbBookings.push(docSnapshot.data() as Booking);
+        });
+        if (fbBookings.length > 0) {
+          setBookings(fbBookings);
+        }
+      } catch (err) {
+        console.error("Error fetching bookings:", err);
+      }
+    };
+    fetchBookings();
+  }, []);
+
   // Persist bookings to localStorage whenever they change
   useEffect(() => {
     localStorage.setItem('all_bookings', JSON.stringify(bookings));
@@ -84,13 +105,23 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     return true;
   };
 
-  const confirmBooking = (bookingId: string) => {
+  const confirmBooking = async (bookingId: string) => {
+    try {
+      await updateDoc(doc(db, 'bookings', bookingId), { status: 'confirmed' });
+    } catch (err) {
+      console.error("Error confirming booking:", err);
+    }
     setBookings((prev) =>
       prev.map((b) => (b.id === bookingId ? { ...b, status: 'confirmed' } : b))
     );
   };
 
-  const cancelBooking = (bookingId: string) => {
+  const cancelBooking = async (bookingId: string) => {
+    try {
+      await updateDoc(doc(db, 'bookings', bookingId), { status: 'cancelled' });
+    } catch (err) {
+      console.error("Error cancelling booking:", err);
+    }
     setBookings((prev) =>
       prev.map((b) => (b.id === bookingId ? { ...b, status: 'cancelled' } : b))
     );
