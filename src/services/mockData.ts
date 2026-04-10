@@ -1,14 +1,14 @@
 import { User, UserRole, Turf, Booking } from '@/types/index';
-import bananiImg from '@/assets/images/banani.png';
-import bashundharaImg from '@/assets/images/bashundhara.png';
-import dhanmondiImg from '@/assets/images/dhanmondi.png';
-import farmgateImg from '@/assets/images/farmgate.png';
-import gulshanImg from '@/assets/images/gulshan.png';
-import mirpurImg from '@/assets/images/mirpur.png';
-import mohammadpurImg from '@/assets/images/mohammadpur.png';
-import motijheelImg from '@/assets/images/motijheel.png';
-import shahbagImg from '@/assets/images/shahbag.png';
-import uttaraImg from '@/assets/images/uttara.png';
+import bananiImg from '@/assets/images/banani.webp';
+import bashundharaImg from '@/assets/images/bashundhara.webp';
+import dhanmondiImg from '@/assets/images/dhanmondi.webp';
+import farmgateImg from '@/assets/images/farmgate.webp';
+import gulshanImg from '@/assets/images/gulshan.webp';
+import mirpurImg from '@/assets/images/mirpur.webp';
+import mohammadpurImg from '@/assets/images/mohammadpur.webp';
+import motijheelImg from '@/assets/images/motijheel.webp';
+import shahbagImg from '@/assets/images/shahbag.webp';
+import uttaraImg from '@/assets/images/uttara.webp';
 
 export const INITIAL_USERS: User[] = [
   {

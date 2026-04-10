@@ -6,7 +6,7 @@ import {
   ChevronDown, ChevronLeft, ChevronRight, Zap, ShieldCheck, Headphones, Quote, X, Filter
 } from 'lucide-react';
 import { useData } from '@/context/DataContext';
-import h1Img from '@/assets/images/h1.avif';
+import h1Img from '@/assets/images/h1.webp';
 // Hero Slider Data
 const HERO_SLIDES = [
   {
