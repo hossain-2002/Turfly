@@ -3,15 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { Lock, Mail, User, AlertCircle, Eye, EyeOff } from 'lucide-react';
 import AuthLayout from '@/layouts/AuthLayout';
-
-const GoogleLogo = () => (
-  <svg viewBox="0 0 48 48" className="h-5 w-5" aria-hidden="true">
-    <path fill="#EA4335" d="M24 9.5c3.54 0 6.72 1.24 9.24 3.66l6.9-6.9C35.92 2.7 30.47 0 24 0 14.62 0 6.51 5.36 2.56 13.17l8.05 6.26C12.48 13.06 17.82 9.5 24 9.5z" />
-    <path fill="#FBBC05" d="M46.14 24.55c0-1.64-.15-3.22-.42-4.75H24v9h12.44c-.54 2.93-2.19 5.41-4.66 7.07l7.16 5.55c4.18-3.86 7.2-9.56 7.2-16.87z" />
-    <path fill="#34A853" d="M12.6 28.57A14.4 14.4 0 0 1 11.8 24c0-1.6.28-3.15.8-4.57l-8.05-6.26A23.98 23.98 0 0 0 0 24c0 3.86.92 7.51 2.56 10.83l10.04-7.8z" />
-    <path fill="#4285F4" d="M24 48c6.47 0 11.89-2.13 15.85-5.79l-7.16-5.55c-1.98 1.33-4.52 2.1-8.69 2.1-6.18 0-11.52-3.56-14.4-8.57l-10.04 7.8C8.51 42.64 16.62 48 24 48z" />
-  </svg>
-);
+import GoogleIcon from '@/components/common/GoogleIcon';
 
 const Register: React.FC = () => {
   const [name, setName] = useState('');
@@ -27,6 +19,7 @@ const Register: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+
     if (password.length < 6) {
       setError('Password must be at least 6 characters.');
       return;
@@ -92,7 +85,7 @@ const Register: React.FC = () => {
               name="name"
               type="text"
               required
-              className="focus:ring-[#10B981] focus:border-[#10B981] block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2.5 border"
+              className="focus:ring-[#10B981] focus:border-[#10B981] block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2.5 border text-black placeholder:text-gray-500"
               placeholder="Enter your full name"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -114,7 +107,7 @@ const Register: React.FC = () => {
               name="email"
               type="email"
               required
-              className="focus:ring-[#10B981] focus:border-[#10B981] block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2.5 border"
+              className="focus:ring-[#10B981] focus:border-[#10B981] block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2.5 border text-black placeholder:text-gray-500"
               placeholder="user@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -136,7 +129,7 @@ const Register: React.FC = () => {
               name="password"
               type={showPassword ? "text" : "password"}
               required
-              className="focus:ring-[#10B981] focus:border-[#10B981] block w-full pl-10 pr-10 sm:text-sm border-gray-300 rounded-md py-2.5 border text-slate-900"
+              className="focus:ring-[#10B981] focus:border-[#10B981] block w-full pl-10 pr-10 sm:text-sm border-gray-300 rounded-md py-2.5 border text-black placeholder:text-gray-500"
               placeholder="Min 6 characters"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -178,7 +171,7 @@ const Register: React.FC = () => {
         disabled={loading}
         className="w-full flex items-center justify-center gap-3 rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-700 shadow-sm transition-all hover:border-slate-300 hover:bg-slate-50 disabled:opacity-70"
       >
-        <GoogleLogo />
+        <GoogleIcon className="h-5 w-5" />
         Continue with Google
       </button>
 
