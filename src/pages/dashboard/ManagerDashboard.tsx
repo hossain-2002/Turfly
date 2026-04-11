@@ -34,8 +34,8 @@ const ManagerDashboard: React.FC = () => {
        setIsManagerAuth(true);
        showToast('Welcome back, Manager', 'success');
     } else {
-       const success = await login(mgrEmail, mgrPass);
-       if(success) {
+       const result = await login(mgrEmail, mgrPass);
+       if(result.success) {
          setIsManagerAuth(true);
          showToast('Login Successful', 'success');
        } else {

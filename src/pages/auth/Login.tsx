@@ -36,12 +36,12 @@ const Login: React.FC = () => {
     e.preventDefault();
     setLoading(true);
     setError('');
-    const success = await login(email, password);
+    const result = await login(email, password);
     setLoading(false);
-    if (success) {
+    if (result.success) {
       navigate(from, { replace: true });
     } else {
-      setError('Invalid email or password. Please try again.');
+      setError(result.error || 'Email or password is incorrect');
     }
   };
 

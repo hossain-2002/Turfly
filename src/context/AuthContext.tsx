@@ -1,66 +1,111 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { User, UserRole } from '@/types/index';
-import { INITIAL_USERS } from '@/services/mockData';
-
-const SESSION_KEY = 'turfly_user_session';
+import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import { User as AppUser, UserRole } from '@/types/index';
+import { auth } from '@/services/firebase';
+import {
+  FirebaseError,
+  User as FirebaseUser,
+  browserLocalPersistence,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  setPersistence,
+  signInWithEmailAndPassword,
+  signOut,
+  updateProfile,
+} from 'firebase/auth';
 
 interface AuthContextType {
-  user: User | null;
+  user: AppUser | null;
   isAuthenticated: boolean;
-  login: (email: string, password: string) => Promise<boolean>;
-  register: (name: string, email: string, password: string) => Promise<boolean>;
-  logout: () => void;
+  loading: boolean;
+  login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
+  register: (name: string, email: string, password: string) => Promise<{ success: boolean; error?: string }>;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+const toAppUser = (firebaseUser: FirebaseUser): AppUser => ({
+  id: firebaseUser.uid,
+  name: firebaseUser.displayName || firebaseUser.email?.split('@')[0] || 'User',
+  email: firebaseUser.email || '',
+  role: UserRole.USER,
+});
+
+const isFirebaseError = (error: unknown): error is FirebaseError =>
+  typeof error === 'object' && error !== null && 'code' in error;
+
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  // Restore session from localStorage on mount
-  const [user, setUser] = useState<User | null>(() => {
-    try {
-      const stored = localStorage.getItem(SESSION_KEY);
-      return stored ? JSON.parse(stored) : null;
-    } catch {
-      return null;
-    }
-  });
+  const [user, setUser] = useState<AppUser | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const saveUser = (u: User | null) => {
-    if (u) {
-      localStorage.setItem(SESSION_KEY, JSON.stringify(u));
-    } else {
-      localStorage.removeItem(SESSION_KEY);
-    }
-    setUser(u);
-  };
+  useEffect(() => {
+    let mounted = true;
 
-  const login = async (email: string, password: string): Promise<boolean> => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    const foundUser = INITIAL_USERS.find(
-      (u) => u.email === email && u.password === password
-    );
-    if (foundUser) {
-      saveUser(foundUser);
-      return true;
-    }
-    return false;
-  };
+    const init = async () => {
+      try {
+        await setPersistence(auth, browserLocalPersistence);
+      } catch {
+        // Ignore persistence setup failures and continue with auth state.
+      }
 
-  const register = async (name: string, email: string, password: string): Promise<boolean> => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    const newUser: User = {
-      id: Math.random().toString(36).substr(2, 9),
-      name,
-      email,
-      role: UserRole.USER,
-      password,
+      const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+        if (!mounted) {
+          return;
+        }
+        setUser(firebaseUser ? toAppUser(firebaseUser) : null);
+        setLoading(false);
+      });
+
+      return unsubscribe;
     };
-    saveUser(newUser);
-    return true;
+
+    let unsubscribe: (() => void) | undefined;
+    init().then((cleanup) => {
+      unsubscribe = cleanup;
+    });
+
+    return () => {
+      mounted = false;
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
+  }, []);
+
+  const login = async (email: string, password: string): Promise<{ success: boolean; error?: string }> => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      return { success: true };
+    } catch (error) {
+      if (isFirebaseError(error)) {
+        return { success: false, error: 'Email or password is incorrect' };
+      }
+      return { success: false, error: 'Email or password is incorrect' };
+    }
   };
 
-  const logout = () => {
-    saveUser(null);
+  const register = async (name: string, email: string, password: string): Promise<{ success: boolean; error?: string }> => {
+    try {
+      const credentials = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(credentials.user, { displayName: name });
+      setUser({
+        id: credentials.user.uid,
+        name,
+        email: credentials.user.email || email,
+        role: UserRole.USER,
+      });
+      return { success: true };
+    } catch (error) {
+      if (isFirebaseError(error) && error.code === 'auth/email-already-in-use') {
+        return { success: false, error: 'User already exists. Please sign in' };
+      }
+      return { success: false, error: 'Unable to create account. Please try again.' };
+    }
+  };
+
+  const logout = async () => {
+    await signOut(auth);
+    setUser(null);
   };
 
   return (
@@ -68,6 +113,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       value={{
         user,
         isAuthenticated: !!user,
+        loading,
         login,
         register,
         logout,

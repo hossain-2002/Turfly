@@ -31,9 +31,14 @@ const Register: React.FC = () => {
     }
 
     setLoading(true);
-    await register(name, email, password);
+    const result = await register(name, email, password);
     setLoading(false);
-    navigate('/');
+
+    if (result.success) {
+      navigate('/');
+    } else {
+      setError(result.error || 'User already exists. Please sign in');
+    }
   };
 
   return (
