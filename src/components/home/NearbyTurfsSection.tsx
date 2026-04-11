@@ -9,6 +9,35 @@ import { useToast } from '@/context/ToastContext';
 import { calculateDistance } from '@/utils/geoUtils';
 import { Turf } from '@/types/index';
 
+interface MapErrorBoundaryProps {
+  children: React.ReactNode;
+  fallback: React.ReactNode;
+}
+
+interface MapErrorBoundaryState {
+  hasError: boolean;
+}
+
+class MapErrorBoundary extends React.Component<MapErrorBoundaryProps, MapErrorBoundaryState> {
+  state: MapErrorBoundaryState = { hasError: false };
+
+  static getDerivedStateFromError(): MapErrorBoundaryState {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error) {
+    // Keep app alive if map internals fail at runtime.
+    console.error('Nearby map failed to render', error);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
 // ─── Default center: Dhaka ────────────────────────────────────────
 const DHAKA_CENTER: [number, number] = [23.7806, 90.3993];
 
@@ -105,9 +134,8 @@ const LocateMeControl: React.FC<{
   const map = useMap();
 
   const handleClick = useCallback(() => {
-    if (userLocation) {
-      map.flyTo([userLocation.lat, userLocation.lng], 15, { duration: 1.2 });
-    }
+    if (!userLocation) return;
+    map.flyTo([userLocation.lat, userLocation.lng], 15, { duration: 1.2 });
   }, [map, userLocation]);
 
   if (!userLocation) return null;
@@ -333,52 +361,63 @@ const NearbyTurfsSection: React.FC = () => {
               </div>
             )}
 
-            {/* Locate Me button (overlaid on map) */}
-            <LocateMeControl userLocation={userLocation} />
-
-            <MapContainer
-              center={mapCenter}
-              zoom={12}
-              scrollWheelZoom={true}
-              className="h-full w-full z-0"
-              style={{ height: '100%', width: '100%' }}
+            <MapErrorBoundary
+              fallback={
+                <div className="w-full h-full min-h-[450px] bg-slate-100 dark:bg-slate-800 flex items-center justify-center p-4">
+                  <div className="text-center">
+                    <p className="text-sm font-semibold text-slate-700 dark:text-slate-200">Map is temporarily unavailable.</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Please refresh to try loading nearby turfs again.</p>
+                  </div>
+                </div>
+              }
             >
-              {/* CartoDB Voyager — cleaner, modern tile layer */}
-              <TileLayer
-                attribution='&copy; <a href="https://carto.com/attributions">CARTO</a>'
-                url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
-              />
+              <MapContainer
+                center={mapCenter}
+                zoom={12}
+                scrollWheelZoom={true}
+                className="h-full w-full z-0"
+                style={{ height: '100%', width: '100%', minHeight: '450px' }}
+              >
+                {/* CartoDB Voyager — cleaner, modern tile layer */}
+                <TileLayer
+                  attribution='&copy; <a href="https://carto.com/attributions">CARTO</a>'
+                  url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+                />
 
-              <MapController userLocation={userLocation} nearbyTurfs={nearbyTurfs} />
+                {/* Locate Me button must stay inside MapContainer to use useMap safely. */}
+                <LocateMeControl userLocation={userLocation} />
 
-              {/* ── User pulse marker ── */}
-              {userLocation && (
-                <Marker position={[userLocation.lat, userLocation.lng]} icon={userPulseIcon}>
-                  <Popup className="font-sans">
-                    <div className="text-center p-1">
-                      <strong className="block text-slate-800 text-sm mb-0.5">📍 You are here</strong>
-                      <span className="text-[11px] text-slate-500">Current Location</span>
-                    </div>
-                  </Popup>
-                </Marker>
-              )}
+                <MapController userLocation={userLocation} nearbyTurfs={nearbyTurfs} />
 
-              {/* ── Turf circle markers — popup on hover ── */}
-              {turfsWithDistance.map((turf) => {
-                if (!turf.coordinates) return null;
-                const icon = markerIcons.get(turf.id);
-                if (!icon) return null;
+                {/* ── User pulse marker ── */}
+                {userLocation && (
+                  <Marker position={[userLocation.lat, userLocation.lng]} icon={userPulseIcon}>
+                    <Popup className="font-sans">
+                      <div className="text-center p-1">
+                        <strong className="block text-slate-800 text-sm mb-0.5">📍 You are here</strong>
+                        <span className="text-[11px] text-slate-500">Current Location</span>
+                      </div>
+                    </Popup>
+                  </Marker>
+                )}
 
-                return (
-                  <HoverMarker
-                    key={turf.id}
-                    turf={turf}
-                    icon={icon}
-                    distance={turf.distance}
-                  />
-                );
-              })}
-            </MapContainer>
+                {/* ── Turf circle markers — popup on hover ── */}
+                {turfsWithDistance.map((turf) => {
+                  if (!turf.coordinates) return null;
+                  const icon = markerIcons.get(turf.id);
+                  if (!icon) return null;
+
+                  return (
+                    <HoverMarker
+                      key={turf.id}
+                      turf={turf}
+                      icon={icon}
+                      distance={turf.distance}
+                    />
+                  );
+                })}
+              </MapContainer>
+            </MapErrorBoundary>
           </div>
         )}
 
