@@ -3,11 +3,13 @@ import { User as AppUser, UserRole } from '@/types/index';
 import { auth } from '@/services/firebase';
 import {
   FirebaseError,
+  GoogleAuthProvider,
   User as FirebaseUser,
   browserLocalPersistence,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   setPersistence,
+  signInWithPopup,
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
@@ -19,6 +21,7 @@ interface AuthContextType {
   loading: boolean;
   login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
   register: (name: string, email: string, password: string) => Promise<{ success: boolean; error?: string }>;
+  signInWithGoogle: () => Promise<{ success: boolean; error?: string }>;
   logout: () => Promise<void>;
 }
 
@@ -103,6 +106,19 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   };
 
+  const signInWithGoogle = async (): Promise<{ success: boolean; error?: string }> => {
+    try {
+      const provider = new GoogleAuthProvider();
+      await signInWithPopup(auth, provider);
+      return { success: true };
+    } catch (error) {
+      if (isFirebaseError(error) && error.code === 'auth/popup-closed-by-user') {
+        return { success: false, error: 'Google sign-in was cancelled.' };
+      }
+      return { success: false, error: 'Unable to sign in with Google. Please try again.' };
+    }
+  };
+
   const logout = async () => {
     await signOut(auth);
     setUser(null);
@@ -116,6 +132,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         loading,
         login,
         register,
+        signInWithGoogle,
         logout,
       }}
     >
