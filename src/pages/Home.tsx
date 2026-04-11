@@ -6,6 +6,7 @@ import {
   ChevronDown, ChevronLeft, ChevronRight, Zap, ShieldCheck, Headphones, Quote, X, Filter
 } from 'lucide-react';
 import { useData } from '@/context/DataContext';
+import NearbyTurfsSection from '@/components/home/NearbyTurfsSection';
 import h1Img from '@/assets/images/h1.webp';
 // Hero Slider Data
 const HERO_SLIDES = [
@@ -589,6 +590,9 @@ const Home: React.FC = () => {
              <SearchForm filters={filters} setFilters={setFilters} onSearch={handleSearch} isSticky={true} />
         </div>
       </div>
+
+      {/* 2.5 Nearby Turfs Map Section */}
+      <NearbyTurfsSection />
 
       {/* 3. Featured Arenas */}
       <section className="bg-white dark:bg-slate-800 py-20 px-4 sm:px-6 lg:px-8 border-y border-slate-100 dark:border-slate-700 reveal-on-scroll transition-colors">
