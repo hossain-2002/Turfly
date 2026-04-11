@@ -5,7 +5,6 @@ A premium sports turf booking platform designed to help users find and book thei
 ## ✨ Key Features:
 - **Dynamic Booking System**: Easily select sports and dates to book turfs in seconds.
 - **Admin & Manager Portals**: Powerful dashboards to manage and monitor bookings efficiently.
-- **Secret Portal Access**: A hidden logic that grants access to restricted portals via 5 clicks on the logo.
 - **Fully Responsive**: A seamless user experience across both mobile and desktop devices.
 
 ## 🛠️ Tech Stack:
