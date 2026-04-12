@@ -1,109 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from '@/context/AuthContext';
-import { DataProvider } from '@/context/DataContext';
-import { ToastProvider } from '@/context/ToastContext';
-import Layout from '@/layouts/Layout';
-import Home from '@/pages/Home';
-import TurfList from '@/pages/turf/TurfList';
-import TurfDetail from '@/pages/turf/TurfDetail';
-import Login from '@/pages/auth/Login';
-import Register from '@/pages/auth/Register';
-import Support from '@/pages/Support';
-import MyBookings from '@/pages/MyBookings';
-import Checkout from '@/pages/Checkout';
-import AdminDashboard from '@/pages/dashboard/AdminDashboard';
-import ManagerDashboard from '@/pages/dashboard/ManagerDashboard';
-import ScrollToTop from '@/components/common/ScrollToTop';
-import { Loader2 } from 'lucide-react';
-
-// Protected Route Wrapper
-const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { isAuthenticated, loading } = useAuth();
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-[#0F172A] flex flex-col items-center justify-center">
-        <Loader2 className="w-12 h-12 text-emerald-500 animate-spin mb-4" />
-        <p className="text-slate-400 text-sm font-mono animate-pulse">Verifying Session...</p>
-      </div>
-    );
-  }
-  if (!isAuthenticated) return <Navigate to="/login" replace />;
-  return <>{children}</>;
-};
-
-// Route Loader Component for Professional Feel
-const RouteLoader: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Simulate system check/data fetch
-    const timer = setTimeout(() => setLoading(false), 800);
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-[#0F172A] flex flex-col items-center justify-center">
-        <Loader2 className="w-12 h-12 text-emerald-500 animate-spin mb-4" />
-        <p className="text-slate-400 text-sm font-mono animate-pulse">Establishing Secure Connection...</p>
-      </div>
-    );
-  }
-
-  return <>{children}</>;
-};
+import React from 'react';
+import { HashRouter as Router } from 'react-router-dom';
+import AppProviders from '@/app/providers/AppProviders';
+import AppRoutes from '@/app/routes/AppRoutes';
 
 const App: React.FC = () => {
   return (
-    <ToastProvider>
-      <AuthProvider>
-        <DataProvider>
-          <Router>
-            <ScrollToTop />
-            <Layout>
-              <Routes>
-                {/* Public Routes */}
-                <Route path="/" element={<Home />} />
-                <Route path="/turfs" element={<TurfList />} />
-                <Route path="/turfs/:id" element={<TurfDetail />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/support" element={<Support />} />
-
-                <Route path="/admin-dashboard" element={
-                  <RouteLoader>
-                    <AdminDashboard />
-                  </RouteLoader>
-                } />
-
-                <Route path="/manager-dashboard" element={
-                  <RouteLoader>
-                    <ManagerDashboard />
-                  </RouteLoader>
-                } />
-
-                {/* Protected Routes (Authenticated Users) */}
-                <Route path="/my-bookings" element={
-                  <ProtectedRoute>
-                    <MyBookings />
-                  </ProtectedRoute>
-                } />
-
-                <Route path="/checkout" element={
-                  <ProtectedRoute>
-                    <Checkout />
-                  </ProtectedRoute>
-                } />
-
-                {/* Fallback */}
-                <Route path="*" element={<Navigate to="/" replace />} />
-              </Routes>
-            </Layout>
-          </Router>
-        </DataProvider>
-      </AuthProvider>
-    </ToastProvider>
+    <AppProviders>
+      <Router>
+        <AppRoutes />
+      </Router>
+    </AppProviders>
   );
 };
 

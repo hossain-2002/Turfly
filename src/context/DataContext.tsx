@@ -3,12 +3,19 @@ import { Turf, Booking, SupportTicket } from '@/types/index';
 import { INITIAL_TURFS, INITIAL_BOOKINGS } from '@/services/mockData';
 import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
 import { db } from '@/services/firebase';
+import { applyTheme, AppTheme, getInitialTheme } from '@/features/theme/services/themeService';
+import {
+  filterBookingsByTurf,
+  filterBookingsByUser,
+  isBookingAvailable,
+  updateBookingStatus,
+} from '@/features/bookings/services/bookingRules';
 
 interface DataContextType {
   turfs: Turf[];
   bookings: Booking[];
   tickets: SupportTicket[];
-  theme: 'light' | 'dark';
+  theme: AppTheme;
   toggleTheme: () => void;
   addBooking: (booking: Booking) => boolean; 
   confirmBooking: (bookingId: string) => void;
@@ -27,27 +34,10 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [turfs] = useState<Turf[]>(INITIAL_TURFS);
   
   // Theme Management
-  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
-    const saved = localStorage.getItem('theme');
-    // Default to 'light' if not found, unless system pref logic is desired later
-    return (saved === 'dark' || saved === 'light') ? saved : 'light';
-  });
+  const [theme, setTheme] = useState<AppTheme>(() => getInitialTheme());
 
   useEffect(() => {
-    localStorage.setItem('theme', theme);
-    const html = document.documentElement;
-    
-    if (theme === 'dark') {
-      html.classList.add('dark');
-      // Enforce Midnight Pro Deep Slate background on Body to override any specific layout defaults
-      document.body.style.backgroundColor = '#0F172A';
-      document.body.style.color = '#cbd5e1'; // slate-300
-    } else {
-      html.classList.remove('dark');
-      // Enforce Clean White background for Light Mode
-      document.body.style.backgroundColor = '#ffffff';
-      document.body.style.color = '#0f172a'; // slate-900
-    }
+    applyTheme(theme);
   }, [theme]);
 
   const toggleTheme = () => {
@@ -87,14 +77,7 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }, [bookings]);
 
   const checkAvailability = (turfId: string, date: string, startTime: number) => {
-    const conflict = bookings.find(
-      (b) =>
-        b.turfId === turfId &&
-        b.date === date &&
-        b.startTime === startTime &&
-        (b.status === 'confirmed' || b.status === 'pending')
-    );
-    return !conflict;
+    return isBookingAvailable(bookings, turfId, date, startTime);
   };
 
   const addBooking = (booking: Booking): boolean => {
@@ -111,9 +94,7 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     } catch (err) {
       console.error("Error confirming booking:", err);
     }
-    setBookings((prev) =>
-      prev.map((b) => (b.id === bookingId ? { ...b, status: 'confirmed' } : b))
-    );
+    setBookings((prev) => updateBookingStatus(prev, bookingId, 'confirmed'));
   };
 
   const cancelBooking = async (bookingId: string) => {
@@ -122,9 +103,7 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     } catch (err) {
       console.error("Error cancelling booking:", err);
     }
-    setBookings((prev) =>
-      prev.map((b) => (b.id === bookingId ? { ...b, status: 'cancelled' } : b))
-    );
+    setBookings((prev) => updateBookingStatus(prev, bookingId, 'cancelled'));
   };
 
   const clearAllBookings = () => {
@@ -140,8 +119,8 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const getTurfById = (id: string) => turfs.find((t) => t.id === id);
 
-  const getBookingsByTurf = (turfId: string) => bookings.filter((b) => b.turfId === turfId);
-  const getBookingsByUser = (userId: string) => bookings.filter((b) => b.userId === userId);
+  const getBookingsByTurf = (turfId: string) => filterBookingsByTurf(bookings, turfId);
+  const getBookingsByUser = (userId: string) => filterBookingsByUser(bookings, userId);
 
   return (
     <DataContext.Provider
