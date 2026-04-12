@@ -16,7 +16,6 @@
     ],
     "moduleResolution": "bundler",
     "isolatedModules": true,
-    "ignoreDeprecations": "6.0",
     "moduleDetection": "force",
     "allowJs": true,
     "jsx": "react-jsx",
