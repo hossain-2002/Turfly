@@ -6,16 +6,16 @@ import ScrollToTop from '@/components/common/ScrollToTop';
 import ProtectedRoute from '@/app/routes/ProtectedRoute';
 import RouteLoader from '@/app/routes/RouteLoader';
 
-const Home = lazy(() => import('@/pages/Home'));
-const TurfList = lazy(() => import('@/pages/turf/TurfList'));
-const TurfDetail = lazy(() => import('@/pages/turf/TurfDetail'));
-const Login = lazy(() => import('@/pages/auth/Login'));
-const Register = lazy(() => import('@/pages/auth/Register'));
-const Support = lazy(() => import('@/pages/Support'));
-const MyBookings = lazy(() => import('@/pages/MyBookings'));
-const Checkout = lazy(() => import('@/pages/Checkout'));
-const AdminDashboard = lazy(() => import('@/pages/dashboard/AdminDashboard'));
-const ManagerDashboard = lazy(() => import('@/pages/dashboard/ManagerDashboard'));
+const Home = lazy(() => import('@/features/home/pages/Home'));
+const TurfList = lazy(() => import('@/features/turfs/pages/TurfList'));
+const TurfDetail = lazy(() => import('@/features/turfs/pages/TurfDetail'));
+const Login = lazy(() => import('@/features/auth/pages/Login'));
+const Register = lazy(() => import('@/features/auth/pages/Register'));
+const Support = lazy(() => import('@/features/support/pages/Support'));
+const MyBookings = lazy(() => import('@/features/bookings/pages/MyBookings'));
+const Checkout = lazy(() => import('@/features/bookings/pages/Checkout'));
+const AdminDashboard = lazy(() => import('@/features/dashboard/pages/AdminDashboard'));
+const ManagerDashboard = lazy(() => import('@/features/dashboard/pages/ManagerDashboard'));
 
 const RouteSuspenseFallback: React.FC = () => {
   return (

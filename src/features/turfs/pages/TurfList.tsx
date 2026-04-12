@@ -4,7 +4,7 @@ import { useData } from '@/context/DataContext';
 import { MapPin, Filter, Calendar, Trophy, LocateFixed, Loader2, Map, Navigation, X } from 'lucide-react';
 import { useUserLocation } from '@/hooks/useUserLocation';
 import { calculateDistance } from '@/utils/geoUtils';
-import NearbyTurfsMap from '@/components/map/NearbyTurfsMap';
+import NearbyTurfsMap from '@/features/turfs/components/NearbyTurfsMap';
 import { Turf } from '@/types/index';
 
 // Radius filter options
