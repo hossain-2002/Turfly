@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { Lock, Mail, AlertCircle, Eye, EyeOff } from 'lucide-react';
@@ -11,27 +11,12 @@ const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [isDark, setIsDark] = useState(false);
 
   const { login, signInWithGoogle } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state as { from: string } | null;
   const from = state?.from || '/';
-
-  useEffect(() => {
-    const htmlElement = document.documentElement;
-    const checkDarkMode = () => {
-      setIsDark(htmlElement.classList.contains('dark'));
-    };
-
-    checkDarkMode();
-
-    const observer = new MutationObserver(checkDarkMode);
-    observer.observe(htmlElement, { attributes: true, attributeFilter: ['class'] });
-
-    return () => observer.disconnect();
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -64,18 +49,14 @@ const Login: React.FC = () => {
       title="Sign in"
       subtitle={
         <>
-          Don't have an account? <Link to="/register" className="font-medium text-[#10B981] hover:text-emerald-600">Sign up now</Link>
+          Don't have an account? <Link to="/register" className="font-medium text-[#10B981] hover:text-emerald-600">Create now</Link>
         </>
       }
     >
       {error && (
-        <div className={`mb-4 border rounded-lg p-3 flex items-start ${
-          isDark 
-            ? 'bg-red-900/20 border-red-800 text-red-400' 
-            : 'bg-red-50 border-red-200 text-red-700'
-        }`}>
-          <AlertCircle className={`h-5 w-5 mt-0.5 mr-3 flex-shrink-0 ${isDark ? 'text-red-500' : 'text-red-500'}`} />
-          <div className="text-sm">{error}</div>
+        <div className="mb-4 bg-red-50 border border-red-200 rounded-lg p-3 flex items-start">
+          <AlertCircle className="h-5 w-5 text-red-500 mt-0.5 mr-3 flex-shrink-0" />
+          <div className="text-sm text-red-700">{error}</div>
         </div>
       )}
 
@@ -84,56 +65,50 @@ const Login: React.FC = () => {
 
         {/* Email */}
         <div>
-          <label htmlFor="email" className={`block text-sm font-medium mb-1 ${
-            isDark ? 'text-slate-300' : 'text-gray-700'
-          }`}>
+          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
             E-mail
           </label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            autoComplete="email"
-            required
-            className={`block w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#10B981] focus:border-transparent transition-all ${
-              isDark
-                ? 'bg-slate-700 border-slate-600 text-white placeholder:text-slate-500'
-                : 'bg-white border-gray-300 text-gray-900 placeholder:text-gray-400'
-            }`}
-            placeholder="example@gmail.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <Mail className="h-5 w-5 text-gray-400" />
+            </div>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              required
+              className="block w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#10B981] focus:border-transparent bg-white text-gray-900 placeholder:text-gray-400 transition-all"
+              placeholder="example@gmail.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
         </div>
 
         {/* Password */}
         <div>
-          <label htmlFor="password" className={`block text-sm font-medium mb-1 ${
-            isDark ? 'text-slate-300' : 'text-gray-700'
-          }`}>
+          <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
             Password
           </label>
           <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <Lock className="h-5 w-5 text-gray-400" />
+            </div>
             <input
               id="password"
               name="password"
               type={showPassword ? "text" : "password"}
               autoComplete="current-password"
               required
-              className={`block w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#10B981] focus:border-transparent transition-all ${
-                isDark
-                  ? 'bg-slate-700 border-slate-600 text-white placeholder:text-slate-500'
-                  : 'bg-white border-gray-300 text-gray-900 placeholder:text-gray-400'
-              }`}
+              className="block w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#10B981] focus:border-transparent bg-white text-gray-900 placeholder:text-gray-400 transition-all"
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
             <button
               type="button"
-              className={`absolute inset-y-0 right-0 pr-3 flex items-center transition-colors ${
-                isDark ? 'text-slate-500 hover:text-slate-400' : 'text-gray-400 hover:text-gray-600'
-              }`}
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition-colors"
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? (
@@ -152,7 +127,7 @@ const Login: React.FC = () => {
               type="checkbox"
               className="w-4 h-4 rounded border-gray-300 text-[#10B981] focus:ring-[#10B981] accent-[#10B981]"
             />
-            <span className={`text-sm ${isDark ? 'text-slate-400' : 'text-gray-600'}`}>Remember me</span>
+            <span className="text-sm text-gray-600">Remember me</span>
           </label>
           <a href="#" className="text-sm text-[#10B981] hover:text-emerald-600 font-medium">
             Forgot Password?
@@ -163,17 +138,17 @@ const Login: React.FC = () => {
         <button
           type="submit"
           disabled={loading}
-          className="w-full mt-6 py-2.5 px-4 bg-[#10B981] hover:bg-emerald-600 text-white font-bold rounded-full transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+          className="w-full mt-6 py-2.5 px-4 bg-[#10B981] hover:bg-emerald-600 text-white font-bold rounded-lg transition-all disabled:opacity-70 disabled:cursor-not-allowed"
         >
           {loading ? 'Signing in...' : 'Sign in'}
         </button>
       </form>
 
       {/* Divider */}
-      <div className={`flex items-center gap-3 my-5 ${isDark ? 'border-slate-600' : 'border-gray-300'}`}>
-        <div className={`flex-1 border-t ${isDark ? 'border-slate-600' : 'border-gray-300'}`} />
-        <span className={`text-xs font-medium ${isDark ? 'text-slate-500' : 'text-gray-500'}`}>OR</span>
-        <div className={`flex-1 border-t ${isDark ? 'border-slate-600' : 'border-gray-300'}`} />
+      <div className="flex items-center gap-3 my-5">
+        <div className="flex-1 border-t border-gray-300" />
+        <span className="text-xs text-gray-500 font-medium">OR</span>
+        <div className="flex-1 border-t border-gray-300" />
       </div>
 
       {/* Google sign in */}
@@ -181,15 +156,28 @@ const Login: React.FC = () => {
         type="button"
         onClick={handleGoogleSignIn}
         disabled={loading}
-        className={`w-full flex items-center justify-center gap-2 py-2.5 px-4 border rounded-full font-medium transition-all disabled:opacity-70 ${
-          isDark
-            ? 'bg-slate-700 border-slate-600 text-slate-100 hover:bg-slate-600'
-            : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'
-        }`}
+        className="w-full flex items-center justify-center gap-2 py-2.5 px-4 border border-gray-300 rounded-lg bg-white text-gray-700 font-medium hover:bg-gray-50 transition-all disabled:opacity-70"
       >
         <GoogleIcon className="h-5 w-5" />
         Continue with Google
       </button>
+              onClick={() => handleAuthorityAccess('admin')}
+              className="inline-flex items-center justify-center gap-2 rounded-md border border-violet-200 bg-violet-50 px-3 py-2 text-sm font-semibold text-violet-700 hover:bg-violet-100 transition-colors"
+            >
+              <ShieldCheck className="h-4 w-4" />
+              Admin
+            </button>
+            <button
+              type="button"
+              onClick={() => handleAuthorityAccess('manager')}
+              className="inline-flex items-center justify-center gap-2 rounded-md border border-blue-200 bg-blue-50 px-3 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-100 transition-colors"
+            >
+              <LayoutDashboard className="h-4 w-4" />
+              Manager
+            </button>
+          </div>
+        )}
+      </div>
     </AuthLayout>
   );
 };

@@ -79,7 +79,7 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({ children, title, subtitle }) =>
         <div className={`mt-8 text-center text-xs transition-colors duration-300 ${
           isDark ? 'text-slate-500' : 'text-gray-500'
         }`}>
-          &copy; 2026 Turfly. All rights reserved.
+          &copy; 2023 Turfly. All rights reserved.
         </div>
       </div>
     </div>

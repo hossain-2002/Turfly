@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
 interface AuthLayoutProps {
@@ -8,34 +8,10 @@ interface AuthLayoutProps {
 }
 
 const AuthLayout: React.FC<AuthLayoutProps> = ({ children, title, subtitle }) => {
-  const [isDark, setIsDark] = useState(false);
-
-  useEffect(() => {
-    // Detect dark mode from HTML element
-    const htmlElement = document.documentElement;
-    const checkDarkMode = () => {
-      setIsDark(htmlElement.classList.contains('dark'));
-    };
-
-    checkDarkMode();
-
-    // Listen for theme changes
-    const observer = new MutationObserver(checkDarkMode);
-    observer.observe(htmlElement, { attributes: true, attributeFilter: ['class'] });
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <div className={`min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 transition-colors duration-300 ${
-      isDark ? 'bg-[#0F172A]' : 'bg-slate-50'
-    }`}>
+    <div className="min-h-screen bg-slate-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <div className={`py-10 px-8 shadow-lg sm:rounded-2xl transition-colors duration-300 border ${
-          isDark 
-            ? 'bg-slate-800 border-slate-700' 
-            : 'bg-white border-slate-200'
-        }`}>
+        <div className="bg-white py-10 px-8 shadow-lg sm:rounded-2xl">
           {/* Logo */}
           <Link to="/" className="flex justify-center items-center gap-2 mb-6 group">
             <div className="w-10 h-10 transition-transform duration-500 group-hover:rotate-12">
@@ -51,22 +27,16 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({ children, title, subtitle }) =>
                 <path d="M20 38C20 38 10 28 12 18" stroke="#34d399" strokeWidth="2.5" strokeLinecap="round" />
               </svg>
             </div>
-            <span className={`text-3xl font-black tracking-tight transition-colors duration-300 ${
-              isDark ? 'text-white' : 'text-gray-900'
-            }`}>
+            <span className="text-3xl font-black text-gray-900 tracking-tight">
               Turfl<span className="text-[#10B981] italic">y</span>
             </span>
           </Link>
 
           {/* Title and Subtitle */}
-          <h2 className={`mt-6 text-center text-2xl font-bold transition-colors duration-300 ${
-            isDark ? 'text-white' : 'text-gray-900'
-          }`}>
+          <h2 className="mt-6 text-center text-2xl font-bold text-gray-900">
             {title}
           </h2>
-          <p className={`mt-2 text-center text-sm transition-colors duration-300 ${
-            isDark ? 'text-slate-400' : 'text-gray-600'
-          }`}>
+          <p className="mt-2 text-center text-sm text-gray-600">
             {subtitle}
           </p>
 
@@ -76,10 +46,8 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({ children, title, subtitle }) =>
           </div>
         </div>
         
-        <div className={`mt-8 text-center text-xs transition-colors duration-300 ${
-          isDark ? 'text-slate-500' : 'text-gray-500'
-        }`}>
-          &copy; 2026 Turfly. All rights reserved.
+        <div className="mt-8 text-center text-xs text-gray-500">
+          &copy; 2023 Turfly. All rights reserved.
         </div>
       </div>
     </div>
