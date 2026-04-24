@@ -56,7 +56,7 @@ const Navbar: React.FC = () => {
   // Border: 2px Solid Emerald (#10B981).
   const navContainerClass = `
     fixed top-4 z-[100] 
-    w-[95%] max-w-7xl left-1/2 -translate-x-1/2
+    w-[calc(100%-2rem)] md:w-[95%] max-w-7xl left-1/2 -translate-x-1/2
     rounded-2xl 
     border-2 border-primary-500
     shadow-[0_0_15px_rgba(16,185,129,0.2)]
@@ -73,18 +73,26 @@ const Navbar: React.FC = () => {
   const mobileMenuBg = isDark ? 'bg-[#0F172A]' : 'bg-white';
 
   return (
-    <nav className={navContainerClass}>
-      {/* Internal Padding px-10 to px-12 */}
+    <>
+      {/* Mobile Backdrop */}
+      {isOpen && (
+        <div 
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[90] md:hidden transition-opacity duration-300"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+      <nav className={navContainerClass}>
+        {/* Internal Padding px-10 to px-12 */}
       <div className="w-full px-6 md:px-12">
         <div className="flex items-center justify-between h-16">
             
             {/* Logo */}
             <div className="flex-shrink-0 flex items-center z-20">
                 <Logo
-                  iconSize="relative w-9 h-9"
-                  textSize="text-2xl"
+                  iconSize="relative w-7 h-7 sm:w-9 sm:h-9"
+                  textSize="text-xl sm:text-2xl"
                   textColor={logoTextClass}
-                  hideTextOnMobile={true}
+                  hideTextOnMobile={false}
                   iconContainerClassName="transition-all duration-300 group-hover:rotate-180"
                   isDark={isDark}
                 />
@@ -229,7 +237,7 @@ const Navbar: React.FC = () => {
                     <Link
                         key={link.name}
                         to={link.path}
-                        className={`block text-xl font-bold px-4 py-3 rounded-xl transition-colors ${
+                        className={`block text-lg font-bold px-4 py-3 rounded-xl transition-colors ${
                             (link.path === '/' 
                               ? location.pathname === '/' 
                               : location.pathname.startsWith(link.path))
@@ -282,6 +290,7 @@ const Navbar: React.FC = () => {
          </div>
       </div>
     </nav>
+    </>
   );
 };
 

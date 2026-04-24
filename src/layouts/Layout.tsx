@@ -32,11 +32,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               <p className="text-slate-400 text-sm leading-relaxed">
                 The #1 platform for sports enthusiasts. Book your favorite turf in seconds and get back to doing what you love.
               </p>
-              <div className="flex space-x-4 pt-2">
-                <a href="#" className="text-slate-500 hover:text-emerald-400 transition-colors"><Facebook className="w-5 h-5" /></a>
-                <a href="#" className="text-slate-500 hover:text-emerald-400 transition-colors"><Instagram className="w-5 h-5" /></a>
-                <a href="#" className="text-slate-500 hover:text-emerald-400 transition-colors"><Twitter className="w-5 h-5" /></a>
-                <a href="#" className="text-slate-500 hover:text-emerald-400 transition-colors"><Linkedin className="w-5 h-5" /></a>
+              <div className="flex gap-2 pt-2 -ml-2">
+                <a href="#" className="p-2 text-slate-500 hover:text-emerald-400 transition-colors"><Facebook className="w-5 h-5" /></a>
+                <a href="#" className="p-2 text-slate-500 hover:text-emerald-400 transition-colors"><Instagram className="w-5 h-5" /></a>
+                <a href="#" className="p-2 text-slate-500 hover:text-emerald-400 transition-colors"><Twitter className="w-5 h-5" /></a>
+                <a href="#" className="p-2 text-slate-500 hover:text-emerald-400 transition-colors"><Linkedin className="w-5 h-5" /></a>
               </div>
             </div>
 
@@ -44,10 +44,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <div>
               <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4">Company</h3>
               <ul className="space-y-3">
-                <li><a href="#" className="text-slate-400 hover:text-emerald-400 transition-colors text-sm">About Us</a></li>
-                <li><a href="#" className="text-slate-400 hover:text-emerald-400 transition-colors text-sm">Careers</a></li>
-                <li><a href="#" className="text-slate-400 hover:text-emerald-400 transition-colors text-sm">Blog</a></li>
-                <li><a href="#" className="text-slate-400 hover:text-emerald-400 transition-colors text-sm">Partners</a></li>
+                <li><a href="#" className="inline-block py-1.5 text-slate-400 hover:text-emerald-400 transition-colors text-sm">About Us</a></li>
+                <li><a href="#" className="inline-block py-1.5 text-slate-400 hover:text-emerald-400 transition-colors text-sm">Careers</a></li>
+                <li><a href="#" className="inline-block py-1.5 text-slate-400 hover:text-emerald-400 transition-colors text-sm">Blog</a></li>
+                <li><a href="#" className="inline-block py-1.5 text-slate-400 hover:text-emerald-400 transition-colors text-sm">Partners</a></li>
               </ul>
             </div>
 
@@ -55,10 +55,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <div>
               <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4">Support</h3>
               <ul className="space-y-3">
-                <li><Link to="/support" className="text-slate-400 hover:text-emerald-400 transition-colors text-sm">Help Center</Link></li>
-                <li><a href="#" className="text-slate-400 hover:text-emerald-400 transition-colors text-sm">Booking Policy</a></li>
-                <li><a href="#" className="text-slate-400 hover:text-emerald-400 transition-colors text-sm">Terms of Service</a></li>
-                <li><a href="#" className="text-slate-400 hover:text-emerald-400 transition-colors text-sm">Privacy Policy</a></li>
+                <li><Link to="/support" className="inline-block py-1.5 text-slate-400 hover:text-emerald-400 transition-colors text-sm">Help Center</Link></li>
+                <li><a href="#" className="inline-block py-1.5 text-slate-400 hover:text-emerald-400 transition-colors text-sm">Booking Policy</a></li>
+                <li><a href="#" className="inline-block py-1.5 text-slate-400 hover:text-emerald-400 transition-colors text-sm">Terms of Service</a></li>
+                <li><a href="#" className="inline-block py-1.5 text-slate-400 hover:text-emerald-400 transition-colors text-sm">Privacy Policy</a></li>
               </ul>
             </div>
 

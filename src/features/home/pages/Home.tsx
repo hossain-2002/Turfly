@@ -125,13 +125,13 @@ const CustomCalendar: React.FC<CalendarProps> = ({ selectedDate, onSelect, onClo
     <div className="absolute top-full left-0 mt-3 w-72 bg-white rounded-2xl shadow-xl border border-gray-100 p-4 z-50 animate-fade-in select-none">
        {/* Header */}
        <div className="flex justify-between items-center mb-4">
-          <button onClick={handlePrevMonth} className="p-1 hover:bg-gray-100 rounded-full transition-colors text-gray-600">
+          <button onClick={handlePrevMonth} className="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-600">
              <ChevronLeft className="w-5 h-5" />
           </button>
           <span className="font-bold text-gray-900 text-sm">
              {MONTHS[viewDate.getMonth()]} {viewDate.getFullYear()}
           </span>
-          <button onClick={handleNextMonth} className="p-1 hover:bg-gray-100 rounded-full transition-colors text-gray-600">
+          <button onClick={handleNextMonth} className="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-600">
              <ChevronRight className="w-5 h-5" />
           </button>
        </div>
@@ -267,7 +267,7 @@ const SearchForm: React.FC<SearchFormProps> = ({ filters, setFilters, onSearch, 
           onClick={() => setMobileExpanded(true)}
           className="flex items-center gap-3 bg-[#0F172A]/90 backdrop-blur-xl border border-emerald-500/50 shadow-[0_10px_30px_rgba(16,185,129,0.3)] text-white px-6 py-3.5 rounded-full animate-fade-in group active:scale-95 transition-transform"
         >
-          <Search className="w-5 h-5 text-emerald-400 group-hover:scale-110 transition-transform" />
+          <Search className="w-5 h-5 text-emerald-400 group-hover:scale-110 transition-transform animate-pulse" />
           <span className="text-sm font-bold tracking-wide pr-1">Find & Book Turf</span>
           <div className="h-4 w-px bg-slate-600 mx-1"></div>
           <span className="text-xs text-slate-400 font-medium">Anytime</span>
@@ -278,8 +278,8 @@ const SearchForm: React.FC<SearchFormProps> = ({ filters, setFilters, onSearch, 
 
   // --- FULL FORM VIEW (Hero Static OR Mobile Expanded Overlay) ---
   const containerClasses = mobileExpanded
-    ? 'fixed inset-0 z-[100] bg-[#0F172A] p-6 flex flex-col pt-24 animate-fade-in' // Full screen overlay on mobile
-    : `transition-all duration-300 mx-auto ${isSticky ? 'search-soft-square w-[95%] max-w-4xl p-2 hidden md:flex' : 'search-soft-square w-[95%] max-w-4xl p-2 flex flex-col md:flex-row'}`; // Desktop Bar or Hero Block
+    ? 'fixed inset-0 z-[110] bg-[#0F172A] p-6 flex flex-col pt-24 animate-fade-in' // Full screen overlay on mobile
+    : `transition-all duration-300 mx-auto ${isSticky ? 'search-soft-square w-[95%] max-w-4xl p-2 hidden md:flex' : 'search-soft-square w-full px-4 max-w-4xl py-4 md:px-2 md:py-2 md:w-[95%] flex flex-col md:flex-row'}`; // Desktop Bar or Hero Block
 
   return (
     <>
@@ -436,21 +436,21 @@ const SearchForm: React.FC<SearchFormProps> = ({ filters, setFilters, onSearch, 
           </div>
 
           {/* Search Button */}
-          <div className={`${mobileExpanded ? 'w-full mt-6' : 'flex-shrink-0 ml-2 mr-0.5 w-full md:w-auto mt-2 md:mt-0'}`}>
+          <div className={`${mobileExpanded ? 'w-full mt-6' : 'flex-shrink-0 w-full md:w-auto md:ml-2 mt-4 md:mt-0'}`}>
             <button
               type="submit"
               className={`
                 transition-all duration-300 flex items-center justify-center
                 ${mobileExpanded 
                     ? 'btn-primary w-full py-4 rounded-xl shadow-lg text-white font-bold text-lg' 
-                    : 'btn-square-search w-full md:w-11 h-11 md:h-11 rounded-xl font-bold text-white bg-emerald-500 hover:scale-105 active:scale-95'
+                    : 'btn-primary md:!bg-none md:!bg-emerald-500 md:btn-square-search w-full py-3.5 md:py-0 md:w-11 md:h-11 rounded-xl font-bold text-white hover:scale-[1.02] md:hover:scale-105 active:scale-95'
                 }
               `}
               title="Search Turfs"
             >
               <Search className={`${mobileExpanded ? 'h-6 w-6' : 'h-5 w-5 md:h-6 md:w-6 text-white'}`} />
               {/* Text only visible on mobile hero static view or expanded */}
-              {!mobileExpanded && <span className="ml-2 md:hidden">Search Availability</span>}
+              {!mobileExpanded && <span className="ml-2 font-semibold tracking-wide md:hidden">Search Availability</span>}
               {mobileExpanded && <span className="ml-2">Search Now</span>}
             </button>
           </div>
@@ -460,7 +460,7 @@ const SearchForm: React.FC<SearchFormProps> = ({ filters, setFilters, onSearch, 
       {/* Mobile Backdrop for Expanded State */}
       {mobileExpanded && (
         <div 
-            className="fixed inset-0 bg-black/80 z-[90] backdrop-blur-sm"
+            className="fixed inset-0 bg-black/80 z-[105] backdrop-blur-sm"
             onClick={() => setMobileExpanded(false)}
         />
       )}
@@ -553,16 +553,16 @@ const Home: React.FC = () => {
                 />
                 {/* Overlay: Slightly darker in dark mode if desired, but 50% is standard */}
                 <div className="absolute inset-0 bg-black/60" />
-                <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-4 sm:px-6 lg:px-8">
-                    <span className="inline-block py-1.5 px-4 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold mb-6 backdrop-blur-sm tracking-widest uppercase shadow-lg">
+                <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-4 sm:px-6 lg:px-8 pb-16 md:pb-0">
+                    <span className="inline-block py-1.5 px-4 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold mb-6 backdrop-blur-sm tracking-widest uppercase shadow-lg text-center">
                         DEW-DROP TURFS
                     </span>
                     {/* H1 Updated to Static Headline for Clarity */}
-                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-white mb-6 leading-[0.9] drop-shadow-lg">
+                    <h1 className="text-4xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-white mb-6 leading-[1.1] md:leading-[0.9] drop-shadow-lg text-center">
                         Book Your Game, <br />
                         Play Like a <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#10B981] to-[#34D399]">Pro</span>
                     </h1>
-                    <p className="mt-4 text-lg md:text-xl text-slate-200 max-w-2xl mx-auto font-light leading-relaxed drop-shadow-md">
+                    <p className="mt-4 text-base md:text-xl text-slate-200 max-w-2xl mx-auto font-light leading-relaxed drop-shadow-md text-center">
                         The easiest way to find and book premium sports turfs near you. Real-time slots, instant confirmation.
                     </p>
                 </div>
@@ -572,7 +572,7 @@ const Home: React.FC = () => {
 
       {/* 2. Search Widget (Floating over Hero) */}
       {/* Reduced negative margin for compactness on mobile */}
-      <div className="relative z-40 -mt-20 md:-mt-24 px-4 flex justify-center w-full">
+      <div className="relative z-40 -mt-12 md:-mt-24 px-4 flex justify-center w-full">
         <SearchForm filters={filters} setFilters={setFilters} onSearch={handleSearch} />
       </div>
 

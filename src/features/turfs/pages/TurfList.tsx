@@ -194,12 +194,12 @@ const TurfList: React.FC = () => {
         {/* Price Range + Radius Filter Row */}
         <div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center gap-3 flex-wrap">
           <span className="text-sm font-semibold text-slate-500 dark:text-slate-400 whitespace-nowrap">Price / Hour (৳):</span>
-          <div className="flex items-center gap-2 flex-1">
+          <div className="flex items-center gap-2 w-full sm:w-auto flex-1">
             <input
               type="number"
               placeholder="Min"
               min={0}
-              className="w-28 px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+              className="flex-1 sm:w-28 sm:flex-none px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-400"
               value={filters.minPrice}
               onChange={(e) => setFilters(prev => ({ ...prev, minPrice: e.target.value }))}
             />
@@ -208,14 +208,14 @@ const TurfList: React.FC = () => {
               type="number"
               placeholder="Max"
               min={0}
-              className="w-28 px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+              className="flex-1 sm:w-28 sm:flex-none px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-400"
               value={filters.maxPrice}
               onChange={(e) => setFilters(prev => ({ ...prev, maxPrice: e.target.value }))}
             />
             {(filters.minPrice || filters.maxPrice) && (
               <button
                 onClick={() => setFilters(prev => ({ ...prev, minPrice: '', maxPrice: '' }))}
-                className="text-xs text-red-400 hover:text-red-300 font-semibold transition-colors"
+                className="text-sm px-2.5 py-1.5 bg-red-50 dark:bg-red-900/20 rounded-md text-red-500 hover:text-red-400 font-semibold transition-colors shadow-sm ml-1"
               >
                 Clear
               </button>
