@@ -2,6 +2,7 @@ import React from 'react';
 import { AuthProvider } from '@/context/AuthContext';
 import { DataProvider } from '@/context/DataContext';
 import { ToastProvider } from '@/context/ToastContext';
+import { HelmetProvider } from 'react-helmet-async';
 
 interface AppProvidersProps {
   children: React.ReactNode;
@@ -9,11 +10,13 @@ interface AppProvidersProps {
 
 const AppProviders: React.FC<AppProvidersProps> = ({ children }) => {
   return (
-    <ToastProvider>
-      <AuthProvider>
-        <DataProvider>{children}</DataProvider>
-      </AuthProvider>
-    </ToastProvider>
+    <HelmetProvider>
+      <ToastProvider>
+        <AuthProvider>
+          <DataProvider>{children}</DataProvider>
+        </AuthProvider>
+      </ToastProvider>
+    </HelmetProvider>
   );
 };
 

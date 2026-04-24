@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { useData } from '@/context/DataContext';
 import { Menu, X, LogOut, User as UserIcon, Settings, ChevronDown, Sun, Moon } from 'lucide-react';
+import Logo from '@/components/common/Logo';
 
 const Navbar: React.FC = () => {
   const { user, isAuthenticated, logout } = useAuth();
@@ -55,12 +56,12 @@ const Navbar: React.FC = () => {
   // Border: 2px Solid Emerald (#10B981).
   const navContainerClass = `
     fixed top-4 z-[100] 
-    w-[95%] left-1/2 -translate-x-1/2
+    w-[95%] max-w-7xl left-1/2 -translate-x-1/2
     rounded-2xl 
-    border-2 border-[#10B981]
+    border-2 border-primary-500
     shadow-[0_0_15px_rgba(16,185,129,0.2)]
     font-sans transition-colors duration-300
-    ${isDark ? 'bg-[#0F172A]' : 'bg-white'}
+    ${isDark ? 'bg-slate-900' : 'bg-white'}
   `;
 
   // Text Colors
@@ -79,26 +80,14 @@ const Navbar: React.FC = () => {
             
             {/* Logo */}
             <div className="flex-shrink-0 flex items-center z-20">
-                <Link to="/" className="flex items-center gap-2 group cursor-pointer select-none">
-                    {/* Logo Icon: In Dark Mode, invert colors and boost brightness for visibility */}
-                    <div className={`relative w-9 h-9 transition-all duration-300 group-hover:rotate-180 ${isDark ? 'filter invert brightness-150' : ''}`}>
-                         <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full drop-shadow-sm">
-                            <defs>
-                              <linearGradient id="logo-grad-nav" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stopColor="#34d399" />
-                                <stop offset="100%" stopColor="#059669" />
-                              </linearGradient>
-                            </defs>
-                            <path d="M20 2L35.5885 11V29L20 38L4.41154 29V11L20 2Z" stroke="url(#logo-grad-nav)" strokeWidth="3" fill="none" strokeLinejoin="round" />
-                            <path d="M20 38C20 38 22 25 32 18" stroke="#10b981" strokeWidth="2.5" strokeLinecap="round" />
-                            <path d="M20 38C20 38 10 28 12 18" stroke="#34d399" strokeWidth="2.5" strokeLinecap="round" />
-                          </svg>
-                    </div>
-                    {/* Logo Text */}
-                    <span className={`text-2xl font-black tracking-tight transition-colors duration-300 ${logoTextClass} hidden sm:block`}>
-                      Turfl<span className="text-emerald-500 italic">y</span>
-                    </span>
-                </Link>
+                <Logo
+                  iconSize="relative w-9 h-9"
+                  textSize="text-2xl"
+                  textColor={logoTextClass}
+                  hideTextOnMobile={true}
+                  iconContainerClassName="transition-all duration-300 group-hover:rotate-180"
+                  isDark={isDark}
+                />
             </div>
 
             {/* Desktop Navigation */}
@@ -139,6 +128,7 @@ const Navbar: React.FC = () => {
                     onClick={toggleTheme}
                     className={`p-2 rounded-full transition-colors ${isDark ? 'text-white hover:bg-slate-800' : 'text-slate-500 hover:text-slate-900 hover:bg-gray-100'}`}
                     title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                    aria-label={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
                 >
                     {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                 </button>
@@ -208,12 +198,14 @@ const Navbar: React.FC = () => {
                  <button
                     onClick={toggleTheme}
                     className={`p-2 rounded-lg transition-colors focus:outline-none ${isDark ? 'text-white hover:bg-slate-800' : 'text-slate-600 hover:bg-gray-100'}`}
+                    aria-label={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
                  >
                     {isDark ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
                  </button>
                  <button
                     onClick={() => setIsOpen(!isOpen)}
                     className={`p-2 rounded-lg transition-colors focus:outline-none ${isDark ? 'text-slate-300 hover:bg-slate-800' : 'text-slate-600 hover:bg-gray-100'}`}
+                    aria-label={isOpen ? "Close menu" : "Open menu"}
                  >
                     {isOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
                  </button>

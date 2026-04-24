@@ -54,7 +54,7 @@ const Login: React.FC = () => {
       }
     >
       {error && (
-        <div className="mb-4 border rounded-lg p-3 flex items-start bg-red-50 border-red-200 text-red-700 dark:bg-red-900/20 dark:border-red-800 dark:text-red-400">
+        <div className="mb-4 border rounded-lg p-3 flex items-start bg-red-50 border-red-200 text-red-700">
           <AlertCircle className="h-5 w-5 mt-0.5 mr-3 flex-shrink-0 text-red-500" />
           <div className="text-sm">{error}</div>
         </div>
@@ -65,7 +65,7 @@ const Login: React.FC = () => {
 
         {/* Email */}
         <div>
-          <label htmlFor="email" className="block text-sm font-medium mb-1 text-gray-700 dark:text-slate-300">
+          <label htmlFor="email" className="block text-sm font-medium mb-1 text-gray-700">
             E-mail
           </label>
           <input
@@ -74,7 +74,8 @@ const Login: React.FC = () => {
             type="email"
             autoComplete="email"
             required
-            className="block w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 dark:bg-slate-700 dark:border-slate-600 dark:text-white dark:placeholder:text-slate-500"
+            aria-invalid={!!error}
+            className="block w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all bg-white border-gray-300 text-gray-900 placeholder:text-gray-400"
             placeholder="example@gmail.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -83,7 +84,7 @@ const Login: React.FC = () => {
 
         {/* Password */}
         <div>
-          <label htmlFor="password" className="block text-sm font-medium mb-1 text-gray-700 dark:text-slate-300">
+          <label htmlFor="password" className="block text-sm font-medium mb-1 text-gray-700">
             Password
           </label>
           <div className="relative">
@@ -93,14 +94,16 @@ const Login: React.FC = () => {
               type={showPassword ? "text" : "password"}
               autoComplete="current-password"
               required
-              className="block w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 dark:bg-slate-700 dark:border-slate-600 dark:text-white dark:placeholder:text-slate-500"
+              aria-invalid={!!error}
+              className="block w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all bg-white border-gray-300 text-gray-900 placeholder:text-gray-400"
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
             <button
               type="button"
-              className="absolute inset-y-0 right-0 pr-3 flex items-center transition-colors text-gray-400 hover:text-gray-600 dark:text-slate-500 dark:hover:text-slate-400"
+              aria-label={showPassword ? "Hide password" : "Show password"}
+              className="absolute inset-y-0 right-0 pr-3 flex items-center transition-colors text-gray-400 hover:text-gray-600"
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? (
@@ -119,7 +122,7 @@ const Login: React.FC = () => {
               type="checkbox"
               className="w-4 h-4 rounded border-gray-300 text-primary-500 focus:ring-primary-500 accent-primary-500"
             />
-            <span className="text-sm text-gray-600 dark:text-slate-400">Remember me</span>
+            <span className="text-sm text-gray-600">Remember me</span>
           </label>
           <a href="#" className="text-sm text-primary-500 hover:text-emerald-600 font-medium">
             Forgot Password?
@@ -130,17 +133,17 @@ const Login: React.FC = () => {
         <button
           type="submit"
           disabled={loading}
-          className="w-full mt-6 py-2.5 px-4 bg-primary-500 hover:bg-emerald-600 text-white font-bold rounded-full transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+          className="w-full mt-6 py-2.5 px-4 btn-primary text-white font-bold rounded-full transition-all disabled:opacity-70 disabled:cursor-not-allowed"
         >
           {loading ? 'Signing in...' : 'Sign in'}
         </button>
       </form>
 
       {/* Divider */}
-      <div className="flex items-center gap-3 my-5 border-gray-300 dark:border-slate-600">
-        <div className="flex-1 border-t border-gray-300 dark:border-slate-600" />
-        <span className="text-xs font-medium text-gray-500 dark:text-slate-500">OR</span>
-        <div className="flex-1 border-t border-gray-300 dark:border-slate-600" />
+      <div className="flex items-center gap-3 my-5 border-gray-300">
+        <div className="flex-1 border-t border-gray-300" />
+        <span className="text-xs font-medium text-gray-500">OR</span>
+        <div className="flex-1 border-t border-gray-300" />
       </div>
 
       {/* Google sign in */}
@@ -148,7 +151,7 @@ const Login: React.FC = () => {
         type="button"
         onClick={handleGoogleSignIn}
         disabled={loading}
-        className="w-full flex items-center justify-center gap-2 py-2.5 px-4 border rounded-full font-medium transition-all disabled:opacity-70 bg-white border-gray-300 text-gray-700 hover:bg-gray-50 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-100 dark:hover:bg-slate-600"
+        className="w-full flex items-center justify-center gap-2 py-2.5 px-4 border rounded-full font-medium transition-all disabled:opacity-70 bg-white border-gray-300 text-gray-700 hover:bg-gray-50"
       >
         <GoogleIcon className="h-5 w-5" />
         Continue with Google

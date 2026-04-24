@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 import Navbar from '@/components/common/Navbar';
 import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import Logo from '@/components/common/Logo';
 
 interface LayoutProps {
   children: ReactNode;
@@ -23,24 +24,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
             {/* Brand Column */}
             <div className="space-y-4">
-              <Link to="/" className="flex items-center gap-2 group">
-                <div className="w-8 h-8 flex-shrink-0">
-                  <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-                    <defs>
-                      <linearGradient id="footer-logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#34d399" />
-                        <stop offset="100%" stopColor="#059669" />
-                      </linearGradient>
-                    </defs>
-                    <path d="M20 2L35.5885 11V29L20 38L4.41154 29V11L20 2Z" stroke="url(#footer-logo-grad)" strokeWidth="3" fill="none" strokeLinejoin="round" />
-                    <path d="M20 38C20 38 22 25 32 18" stroke="#10b981" strokeWidth="2.5" strokeLinecap="round" />
-                    <path d="M20 38C20 38 10 28 12 18" stroke="#34d399" strokeWidth="2.5" strokeLinecap="round" />
-                  </svg>
-                </div>
-                <span className="text-xl font-black text-white">
-                  Turfl<span className="text-emerald-500 italic">y</span>
-                </span>
-              </Link>
+              <Logo
+                iconSize="w-8 h-8 flex-shrink-0"
+                textSize="text-xl"
+                textColor="text-white"
+              />
               <p className="text-slate-400 text-sm leading-relaxed">
                 The #1 platform for sports enthusiasts. Book your favorite turf in seconds and get back to doing what you love.
               </p>

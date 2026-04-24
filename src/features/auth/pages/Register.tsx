@@ -62,7 +62,7 @@ const Register: React.FC = () => {
       }
     >
       {error && (
-        <div className="mb-4 border rounded-lg p-3 flex items-start bg-red-50 border-red-200 text-red-700 dark:bg-red-900/20 dark:border-red-800 dark:text-red-400">
+        <div className="mb-4 border rounded-lg p-3 flex items-start bg-red-50 border-red-200 text-red-700">
           <AlertCircle className="h-5 w-5 mt-0.5 mr-3 flex-shrink-0 text-red-500" />
           <div className="text-sm">{error}</div>
         </div>
@@ -73,7 +73,7 @@ const Register: React.FC = () => {
 
         {/* Full Name */}
         <div>
-          <label htmlFor="name" className="block text-sm font-medium mb-1 text-gray-700 dark:text-slate-300">
+          <label htmlFor="name" className="block text-sm font-medium mb-1 text-gray-700">
             Full name
           </label>
           <input
@@ -81,7 +81,8 @@ const Register: React.FC = () => {
             name="name"
             type="text"
             required
-            className="block w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 dark:bg-slate-700 dark:border-slate-600 dark:text-white dark:placeholder:text-slate-500"
+            aria-invalid={!!error}
+            className="block w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all bg-white border-gray-300 text-gray-900 placeholder:text-gray-400"
             placeholder="Enter your full name"
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -90,7 +91,7 @@ const Register: React.FC = () => {
 
         {/* Email */}
         <div>
-          <label htmlFor="email" className="block text-sm font-medium mb-1 text-gray-700 dark:text-slate-300">
+          <label htmlFor="email" className="block text-sm font-medium mb-1 text-gray-700">
             E-mail
           </label>
           <input
@@ -98,7 +99,8 @@ const Register: React.FC = () => {
             name="email"
             type="email"
             required
-            className="block w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 dark:bg-slate-700 dark:border-slate-600 dark:text-white dark:placeholder:text-slate-500"
+            aria-invalid={!!error}
+            className="block w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all bg-white border-gray-300 text-gray-900 placeholder:text-gray-400"
             placeholder="example@gmail.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -107,7 +109,7 @@ const Register: React.FC = () => {
 
         {/* Password */}
         <div>
-          <label htmlFor="password" className="block text-sm font-medium mb-1 text-gray-700 dark:text-slate-300">
+          <label htmlFor="password" className="block text-sm font-medium mb-1 text-gray-700">
             Password
           </label>
           <div className="relative">
@@ -116,14 +118,16 @@ const Register: React.FC = () => {
               name="password"
               type={showPassword ? "text" : "password"}
               required
-              className="block w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 dark:bg-slate-700 dark:border-slate-600 dark:text-white dark:placeholder:text-slate-500"
+              aria-invalid={!!error}
+              className="block w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all bg-white border-gray-300 text-gray-900 placeholder:text-gray-400"
               placeholder="Min 6 characters"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
             <button
               type="button"
-              className="absolute inset-y-0 right-0 pr-3 flex items-center transition-colors text-gray-400 hover:text-gray-600 dark:text-slate-500 dark:hover:text-slate-400"
+              aria-label={showPassword ? "Hide password" : "Show password"}
+              className="absolute inset-y-0 right-0 pr-3 flex items-center transition-colors text-gray-400 hover:text-gray-600"
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? (
@@ -139,17 +143,17 @@ const Register: React.FC = () => {
         <button
           type="submit"
           disabled={loading}
-          className="w-full mt-6 py-2.5 px-4 bg-primary-500 hover:bg-emerald-600 text-white font-bold rounded-full transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+          className="w-full mt-6 py-2.5 px-4 btn-primary text-white font-bold rounded-full transition-all disabled:opacity-70 disabled:cursor-not-allowed"
         >
           {loading ? 'Creating account...' : 'Create account'}
         </button>
       </form>
 
       {/* Divider */}
-      <div className="flex items-center gap-3 my-5 border-gray-300 dark:border-slate-600">
-        <div className="flex-1 border-t border-gray-300 dark:border-slate-600" />
-        <span className="text-xs font-medium text-gray-500 dark:text-slate-500">OR</span>
-        <div className="flex-1 border-t border-gray-300 dark:border-slate-600" />
+      <div className="flex items-center gap-3 my-5 border-gray-300">
+        <div className="flex-1 border-t border-gray-300" />
+        <span className="text-xs font-medium text-gray-500">OR</span>
+        <div className="flex-1 border-t border-gray-300" />
       </div>
 
       {/* Google sign up */}
@@ -157,14 +161,14 @@ const Register: React.FC = () => {
         type="button"
         onClick={handleGoogleSignIn}
         disabled={loading}
-        className="w-full flex items-center justify-center gap-2 py-2.5 px-4 border rounded-full font-medium transition-all disabled:opacity-70 bg-white border-gray-300 text-gray-700 hover:bg-gray-50 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-100 dark:hover:bg-slate-600"
+        className="w-full flex items-center justify-center gap-2 py-2.5 px-4 border rounded-full font-medium transition-all disabled:opacity-70 bg-white border-gray-300 text-gray-700 hover:bg-gray-50"
       >
         <GoogleIcon className="h-5 w-5" />
         Continue with Google
       </button>
 
       {/* Terms */}
-      <p className="mt-5 text-xs text-center text-gray-500 dark:text-slate-500">
+      <p className="mt-5 text-xs text-center text-gray-500">
         By clicking "Create account", you agree to our <a href="#" className="text-primary-500 hover:underline font-medium">Terms of Service</a> and <a href="#" className="text-primary-500 hover:underline font-medium">Privacy Policy</a>.
       </p>
     </AuthLayout>
